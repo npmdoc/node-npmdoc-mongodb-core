@@ -1,6 +1,6 @@
 # npmdoc-mongodb-core
 
-#### api documentation for  [mongodb-core (v2.1.10)](https://github.com/christkv/mongodb-core)  [![npm package](https://img.shields.io/npm/v/npmdoc-mongodb-core.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-mongodb-core) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-mongodb-core.svg)](https://travis-ci.org/npmdoc/node-npmdoc-mongodb-core)
+#### basic api documentation for  [mongodb-core (v2.1.10)](https://github.com/christkv/mongodb-core)  [![npm package](https://img.shields.io/npm/v/npmdoc-mongodb-core.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-mongodb-core) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-mongodb-core.svg)](https://travis-ci.org/npmdoc/node-npmdoc-mongodb-core)
 
 #### Core MongoDB driver functionality, no bells and whistles and meant for integration not end applications
 
