@@ -5975,7 +5975,24 @@ _server.insert(&#x27;myproject.inserts1&#x27;, [{a:1}, {a:2}], {
   // Write out the getMore command
   connection.write(getMore, queryOptions, queryCallback);
 }</pre></li>
-    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+  batchSize = this.cursorState.limit - this.cursorState.currentLimit;
+}
+
+// Default pool
+var pool = this.server.s.pool;
+
+// We have a wire protocol handler
+this.server.wireProtocolHandler.<span class="apidocCodeKeywordSpan">getMore</span>(this.bson, this.ns, this.cursorState, batchSize
+, raw, pool, this.options, callback);
+}
+
+Cursor.prototype._killcursor = function(callback) {
+// Set cursor to dead
+this.cursorState.dead = true;
+this.cursorState.killed = true;
+// Remove documents
+...</pre></li>
     </ul>
 
 
@@ -6007,21 +6024,21 @@ _server.insert(&#x27;myproject.inserts1&#x27;, [{a:1}, {a:2}], {
   return executeOrdered(&#x27;insert&#x27;, Insert, ismaster, ns, bson, pool, ops, options, callback);
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
+//     });
+//   }
+// }
+
 server.on(&#x27;connect&#x27;, function(_server) {
-  console.log(&#x27;connected&#x27;);
-
-  // Execute the ismaster command
-  _server.command(&#x27;system.$cmd&#x27;, {ismaster: true}, function(err, result) {
-
-    // Perform a document insert
-    _server.<span class="apidocCodeKeywordSpan">insert</span>(&#x27;myproject.inserts1&#x27;, [{a:1}, {a:2}], {
-writeConcern: {w:1}, ordered:true
-    }, function(err, results) {
-assert.equal(null, err);
-assert.equal(2, results.result.n);
-
-// Perform a document update
-_server.update(&#x27;myproject.inserts1&#x27;, [{
+// console.log(&#x22;===== connect&#x22;)
+setInterval(function() {
+  _server.<span class="apidocCodeKeywordSpan">insert</span>(&#x27;test.test&#x27;, [{a:1}], function(err, r) {
+    console.log(&#x22;insert&#x22;)
+  });
+}, 1000)
+// console.log(&#x22;---------------------------------- 0&#x22;)
+// // Attempt authentication
+// _server.auth(&#x27;scram-sha-1&#x27;, &#x27;admin&#x27;, &#x27;root&#x27;, &#x27;root&#x27;, function(err, r) {
+//   console.log(&#x22;---------------------------------- 1&#x22;)
 ...</pre></li>
     </ul>
 
@@ -6047,7 +6064,24 @@ _server.update(&#x27;myproject.inserts1&#x27;, [{
   // Callback
   if(typeof callback == &#x27;function&#x27;) callback(null, null);
 }</pre></li>
-    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+   if(callback) callback(null, null);
+   return;
+ }
+
+ // Default pool
+ var pool = this.server.s.pool;
+ // Execute command
+ this.server.wireProtocolHandler.<span class="apidocCodeKeywordSpan">killCursor</span>(this.bson, this.ns, this.cursorState.cursorId
+, pool, callback);
+}
+
+/**
+* Clone the cursor
+* @method
+* @return {Cursor}
+*/
+...</pre></li>
     </ul>
 
 
@@ -6260,7 +6294,24 @@ _server.insert(&#x27;myproject.inserts1&#x27;, [{a:1}, {a:2}], {
   // Write out the getMore command
   connection.write(getMore, queryOptions, queryCallback);
 }</pre></li>
-    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+  batchSize = this.cursorState.limit - this.cursorState.currentLimit;
+}
+
+// Default pool
+var pool = this.server.s.pool;
+
+// We have a wire protocol handler
+this.server.wireProtocolHandler.<span class="apidocCodeKeywordSpan">getMore</span>(this.bson, this.ns, this.cursorState, batchSize
+, raw, pool, this.options, callback);
+}
+
+Cursor.prototype._killcursor = function(callback) {
+// Set cursor to dead
+this.cursorState.dead = true;
+this.cursorState.killed = true;
+// Remove documents
+...</pre></li>
     </ul>
 
 
@@ -6276,21 +6327,21 @@ _server.insert(&#x27;myproject.inserts1&#x27;, [{a:1}, {a:2}], {
   executeWrite(pool, bson, &#x27;insert&#x27;, &#x27;documents&#x27;, ns, ops, options, callback);
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
+//     });
+//   }
+// }
+
 server.on(&#x27;connect&#x27;, function(_server) {
-  console.log(&#x27;connected&#x27;);
-
-  // Execute the ismaster command
-  _server.command(&#x27;system.$cmd&#x27;, {ismaster: true}, function(err, result) {
-
-    // Perform a document insert
-    _server.<span class="apidocCodeKeywordSpan">insert</span>(&#x27;myproject.inserts1&#x27;, [{a:1}, {a:2}], {
-writeConcern: {w:1}, ordered:true
-    }, function(err, results) {
-assert.equal(null, err);
-assert.equal(2, results.result.n);
-
-// Perform a document update
-_server.update(&#x27;myproject.inserts1&#x27;, [{
+// console.log(&#x22;===== connect&#x22;)
+setInterval(function() {
+  _server.<span class="apidocCodeKeywordSpan">insert</span>(&#x27;test.test&#x27;, [{a:1}], function(err, r) {
+    console.log(&#x22;insert&#x22;)
+  });
+}, 1000)
+// console.log(&#x22;---------------------------------- 0&#x22;)
+// // Attempt authentication
+// _server.auth(&#x27;scram-sha-1&#x27;, &#x27;admin&#x27;, &#x27;root&#x27;, &#x27;root&#x27;, function(err, r) {
+//   console.log(&#x22;---------------------------------- 1&#x22;)
 ...</pre></li>
     </ul>
 
@@ -6316,7 +6367,24 @@ _server.update(&#x27;myproject.inserts1&#x27;, [{
   // Callback
   if(typeof callback == &#x27;function&#x27;) callback(null, null);
 }</pre></li>
-    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+   if(callback) callback(null, null);
+   return;
+ }
+
+ // Default pool
+ var pool = this.server.s.pool;
+ // Execute command
+ this.server.wireProtocolHandler.<span class="apidocCodeKeywordSpan">killCursor</span>(this.bson, this.ns, this.cursorState.cursorId
+, pool, callback);
+}
+
+/**
+* Clone the cursor
+* @method
+* @return {Cursor}
+*/
+...</pre></li>
     </ul>
 
 
@@ -6555,7 +6623,24 @@ _server.insert(&#x27;myproject.inserts1&#x27;, [{a:1}, {a:2}], {
   // Write out the getMore command
   connection.write(query, queryOptions, queryCallback);
 }</pre></li>
-    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+  batchSize = this.cursorState.limit - this.cursorState.currentLimit;
+}
+
+// Default pool
+var pool = this.server.s.pool;
+
+// We have a wire protocol handler
+this.server.wireProtocolHandler.<span class="apidocCodeKeywordSpan">getMore</span>(this.bson, this.ns, this.cursorState, batchSize
+, raw, pool, this.options, callback);
+}
+
+Cursor.prototype._killcursor = function(callback) {
+// Set cursor to dead
+this.cursorState.dead = true;
+this.cursorState.killed = true;
+// Remove documents
+...</pre></li>
     </ul>
 
 
@@ -6571,21 +6656,21 @@ _server.insert(&#x27;myproject.inserts1&#x27;, [{a:1}, {a:2}], {
   executeWrite(pool, bson, &#x27;insert&#x27;, &#x27;documents&#x27;, ns, ops, options, callback);
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
+//     });
+//   }
+// }
+
 server.on(&#x27;connect&#x27;, function(_server) {
-  console.log(&#x27;connected&#x27;);
-
-  // Execute the ismaster command
-  _server.command(&#x27;system.$cmd&#x27;, {ismaster: true}, function(err, result) {
-
-    // Perform a document insert
-    _server.<span class="apidocCodeKeywordSpan">insert</span>(&#x27;myproject.inserts1&#x27;, [{a:1}, {a:2}], {
-writeConcern: {w:1}, ordered:true
-    }, function(err, results) {
-assert.equal(null, err);
-assert.equal(2, results.result.n);
-
-// Perform a document update
-_server.update(&#x27;myproject.inserts1&#x27;, [{
+// console.log(&#x22;===== connect&#x22;)
+setInterval(function() {
+  _server.<span class="apidocCodeKeywordSpan">insert</span>(&#x27;test.test&#x27;, [{a:1}], function(err, r) {
+    console.log(&#x22;insert&#x22;)
+  });
+}, 1000)
+// console.log(&#x22;---------------------------------- 0&#x22;)
+// // Attempt authentication
+// _server.auth(&#x27;scram-sha-1&#x27;, &#x27;admin&#x27;, &#x27;root&#x27;, &#x27;root&#x27;, function(err, r) {
+//   console.log(&#x22;---------------------------------- 1&#x22;)
 ...</pre></li>
     </ul>
 
@@ -6651,7 +6736,24 @@ _server.update(&#x27;myproject.inserts1&#x27;, [{
     }, killCursorCallback);
   }
 }</pre></li>
-    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+   if(callback) callback(null, null);
+   return;
+ }
+
+ // Default pool
+ var pool = this.server.s.pool;
+ // Execute command
+ this.server.wireProtocolHandler.<span class="apidocCodeKeywordSpan">killCursor</span>(this.bson, this.ns, this.cursorState.cursorId
+, pool, callback);
+}
+
+/**
+* Clone the cursor
+* @method
+* @return {Cursor}
+*/
+...</pre></li>
     </ul>
 
 
@@ -7452,21 +7554,21 @@ module.exports = CommandResult;
   return this.buffer != null ? this.buffer.slice(0, this.position).toString(format) : &#x27;&#x27;;
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
-if(workItem.socketTimeout) {
-  connection.resetSocketTimeout();
-}
 
-// Log if debug enabled
-if(self.logger.isDebug()) {
-  self.logger.debug(f(&#x27;message [%s] received from %s:%s&#x27;
-    , message.raw.<span class="apidocCodeKeywordSpan">toString</span>(&#x27;hex&#x27;), self.options.host, self.options.port));
-}
+  // Execute MongoCR
+  var executeScram = function(connection) {
+// Clean up the user
+username = username.replace(&#x27;=&#x27;, &#x22;=3D&#x22;).replace(&#x27;,&#x27;, &#x27;=2C&#x27;);
 
-// Authenticate any straggler connections
-function authenticateStragglers(self, connection, callback) {
-  // Get any non authenticated connections
-  var connections = self.nonAuthenticatedConnections.slice(0);
-  var nonAuthenticatedConnections = self.nonAuthenticatedConnections;
+// Create a random nonce
+var nonce = crypto.randomBytes(24).<span class="apidocCodeKeywordSpan">toString</span>(&#x27;base64&#x27;);
+// var nonce = &#x27;MsQUY9iw0T9fx2MUEz6LZPwGuhVvWAhc&#x27;
+var firstBare = f(&#x22;n=%s,r=%s&#x22;, username, nonce);
+
+// Build command structure
+var cmd = {
+    saslStart: 1
+  , mechanism: &#x27;SCRAM-SHA-1&#x27;
 ...</pre></li>
     </ul>
 
@@ -7510,7 +7612,23 @@ function authenticateStragglers(self, connection, callback) {
     }
   }
 }</pre></li>
-    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+    return callback(errorObject, false);
+  }
+
+  return;
+}
+
+// Get the dictionary
+var dict = parsePayload(r.result.payload.<span class="apidocCodeKeywordSpan">value</span>())
+
+// Unpack dictionary
+var iterations = parseInt(dict.i, 10);
+var salt = dict.s;
+var rnonce = dict.r;
+
+// Set up start of proof
+...</pre></li>
     </ul>
 
 
@@ -7569,21 +7687,20 @@ function authenticateStragglers(self, connection, callback) {
   }
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
-header[index + 3] = (flags &#x3e;&#x3e; 24) &#x26; 0xff;
-header[index + 2] = (flags &#x3e;&#x3e; 16) &#x26; 0xff;
-header[index + 1] = (flags &#x3e;&#x3e; 8) &#x26; 0xff;
-header[index] = (flags) &#x26; 0xff;
-index = index + 4;
+}
 
-// Write collection name
-index = index + header.<span class="apidocCodeKeywordSpan">write</span>(this.ns, index, &#x27;utf8&#x27;) + 1;
-header[index - 1] = 0;
+// Add promote values if defined
+if(typeof self.cursorState.promoteBuffers == &#x27;boolean&#x27;) {
+  queryOptions.promoteBuffers = self.cursorState.promoteBuffers;
+}
+// Write the initial command out
+self.server.s.pool.<span class="apidocCodeKeywordSpan">write</span>(self.query, queryOptions, queryCallback);
+}
 
-// Write header information flags numberToSkip
-header[index + 3] = (this.numberToSkip &#x3e;&#x3e; 24) &#x26; 0xff;
-header[index + 2] = (this.numberToSkip &#x3e;&#x3e; 16) &#x26; 0xff;
-header[index + 1] = (this.numberToSkip &#x3e;&#x3e; 8) &#x26; 0xff;
-header[index] = (this.numberToSkip) &#x26; 0xff;
+Cursor.prototype._getmore = function(callback) {
+if(this.logger.isDebug()) this.logger.debug(f(&#x27;schedule getMore call for query [%s]&#x27;, JSON.stringify(this.query)))
+// Determine if it&#x27;s a raw query
+var raw = this.options.raw || this.cmd.raw;
 ...</pre></li>
     </ul>
 
@@ -8086,21 +8203,21 @@ module.exports = CommandResult;
   // The scientific exponent checks are dictated by the string conversion
   // ...</pre></li>
     <li>example usage<pre class="apidocCodePre">...
-if(workItem.socketTimeout) {
-  connection.resetSocketTimeout();
-}
 
-// Log if debug enabled
-if(self.logger.isDebug()) {
-  self.logger.debug(f(&#x27;message [%s] received from %s:%s&#x27;
-    , message.raw.<span class="apidocCodeKeywordSpan">toString</span>(&#x27;hex&#x27;), self.options.host, self.options.port));
-}
+  // Execute MongoCR
+  var executeScram = function(connection) {
+// Clean up the user
+username = username.replace(&#x27;=&#x27;, &#x22;=3D&#x22;).replace(&#x27;,&#x27;, &#x27;=2C&#x27;);
 
-// Authenticate any straggler connections
-function authenticateStragglers(self, connection, callback) {
-  // Get any non authenticated connections
-  var connections = self.nonAuthenticatedConnections.slice(0);
-  var nonAuthenticatedConnections = self.nonAuthenticatedConnections;
+// Create a random nonce
+var nonce = crypto.randomBytes(24).<span class="apidocCodeKeywordSpan">toString</span>(&#x27;base64&#x27;);
+// var nonce = &#x27;MsQUY9iw0T9fx2MUEz6LZPwGuhVvWAhc&#x27;
+var firstBare = f(&#x22;n=%s,r=%s&#x22;, username, nonce);
+
+// Build command structure
+var cmd = {
+    saslStart: 1
+  , mechanism: &#x27;SCRAM-SHA-1&#x27;
 ...</pre></li>
     </ul>
 
@@ -8343,21 +8460,20 @@ module.exports = CommandResult;
   }
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
-var doc = this.bson.deserialize(document, _options);
 
-// Get the documents
-this.documents = doc.cursor[documentsReturnedIn];
-this.numberReturned = this.documents.length;
-// Ensure we have a Long valie cursor id
-this.cursorId = typeof doc.cursor.id == &#x27;number&#x27;
-  ? Long.<span class="apidocCodeKeywordSpan">fromNumber</span>(doc.cursor.id)
-  : doc.cursor.id;
+  // Logger
+  this.logger = Logger(&#x27;Cursor&#x27;, topologyOptions);
 
-// Adjust the index
-this.index = this.index + bsonSize;
-
-// Set as parsed
-this.parsed = true
+  //
+  // Did we pass in a cursor id
+  if(typeof cmd == &#x27;number&#x27;) {
+    this.cursorState.cursorId = Long.<span class="apidocCodeKeywordSpan">fromNumber</span>(cmd);
+    this.cursorState.lastCursorId = this.cursorState.cursorId;
+  } else if(cmd instanceof Long) {
+    this.cursorState.cursorId = cmd;
+    this.cursorState.lastCursorId = cmd;
+  }
+}
 ...</pre></li>
     </ul>
 
@@ -8476,7 +8592,22 @@ this.parsed = true
   c48 &#x26;= 0xFFFF;
   return Long.fromBits((c16 &#x3c;&#x3c; 16) | c00, (c48 &#x3c;&#x3c; 16) | c32);
 }</pre></li>
-    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+ */
+Mongos.prototype.insert = function(ns, ops, options, callback) {
+if(typeof options == &#x27;function&#x27;) callback = options, options = {}, options = options || {};
+if(this.state == DESTROYED) return callback(new MongoError(f(&#x27;topology was destroyed&#x27;)));
+
+// Not connected but we have a disconnecthandler
+if(!this.isConnected() &#x26;&#x26; this.s.disconnectHandler != null) {
+  return this.s.disconnectHandler.<span class="apidocCodeKeywordSpan">add</span>(&#x27;insert&#x27;, ns, ops, options, callback);
+}
+
+// No mongos proxy available
+if(!this.isConnected()) {
+  return callback(new MongoError(&#x27;no mongos proxy available&#x27;));
+}
+...</pre></li>
     </ul>
 
 
@@ -8645,21 +8776,21 @@ for (var i = 0; i &#x3c; len; i++) {
   return (this.high_ == other.high_) &#x26;&#x26; (this.low_ == other.low_);
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
-servers = servers.concat(this.secondaries);
-servers = servers.concat(this.arbiters);
-servers = servers.concat(this.passives);
+    });
+  } else if(self.cursorState.limit &#x3e; 0 &#x26;&#x26; self.cursorState.currentLimit &#x3e;= self.cursorState.limit) {
+    // Ensure we kill the cursor on the server
+    self.kill();
+    // Set cursor in dead and notified state
+    return setCursorDeadAndNotified(self, callback);
+  } else if(self.cursorState.cursorIndex == self.cursorState.documents.length
+&#x26;&#x26; !Long.ZERO.<span class="apidocCodeKeywordSpan">equals</span>(self.cursorState.cursorId)) {
+// Ensure an empty cursor state
+self.cursorState.documents = [];
+self.cursorState.cursorIndex = 0;
 
-// Check if it&#x27;s active and this is just a failed connection attempt
-for(var i = 0; i &#x3c; servers.length; i++) {
-  if(!options.force
-    &#x26;&#x26; servers[i].<span class="apidocCodeKeywordSpan">equals</span>(server)
-    &#x26;&#x26; servers[i].isConnected
-    &#x26;&#x26; servers[i].isConnected()) {
-    return;
-  }
-}
-
-// If we have it in the set remove it
+// Check if topology is destroyed
+if(self.topology.isDestroyed()) return callback(new MongoError(&#x27;connection destroyed, not possible to instantiate cursor&#x27
+;));
 ...</pre></li>
     </ul>
 
@@ -8842,7 +8973,24 @@ index = index + 4;
     <li>description and source-code<pre class="apidocCodePre">isZero = function () {
   return this.high_ == 0 &#x26;&#x26; this.low_ == 0;
 }</pre></li>
-    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+// Set cursor to dead
+this.cursorState.dead = true;
+this.cursorState.killed = true;
+// Remove documents
+this.cursorState.documents = [];
+
+// If no cursor id just return
+if(this.cursorState.cursorId == null || this.cursorState.cursorId.<span class="apidocCodeKeywordSpan">isZero</span>() || this.cursorState
+.init == false) {
+  if(callback) callback(null, null);
+  return;
+}
+
+// Default pool
+var pool = this.server.s.pool;
+// Execute command
+...</pre></li>
     </ul>
 
 
@@ -9247,21 +9395,21 @@ module.exports = CommandResult;
   }
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
-if(workItem.socketTimeout) {
-  connection.resetSocketTimeout();
-}
 
-// Log if debug enabled
-if(self.logger.isDebug()) {
-  self.logger.debug(f(&#x27;message [%s] received from %s:%s&#x27;
-    , message.raw.<span class="apidocCodeKeywordSpan">toString</span>(&#x27;hex&#x27;), self.options.host, self.options.port));
-}
+  // Execute MongoCR
+  var executeScram = function(connection) {
+// Clean up the user
+username = username.replace(&#x27;=&#x27;, &#x22;=3D&#x22;).replace(&#x27;,&#x27;, &#x27;=2C&#x27;);
 
-// Authenticate any straggler connections
-function authenticateStragglers(self, connection, callback) {
-  // Get any non authenticated connections
-  var connections = self.nonAuthenticatedConnections.slice(0);
-  var nonAuthenticatedConnections = self.nonAuthenticatedConnections;
+// Create a random nonce
+var nonce = crypto.randomBytes(24).<span class="apidocCodeKeywordSpan">toString</span>(&#x27;base64&#x27;);
+// var nonce = &#x27;MsQUY9iw0T9fx2MUEz6LZPwGuhVvWAhc&#x27;
+var firstBare = f(&#x22;n=%s,r=%s&#x22;, username, nonce);
+
+// Build command structure
+var cmd = {
+    saslStart: 1
+  , mechanism: &#x27;SCRAM-SHA-1&#x27;
 ...</pre></li>
     </ul>
 
@@ -9590,21 +9738,21 @@ function authenticateStragglers(self, connection, callback) {
   }
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
-servers = servers.concat(this.secondaries);
-servers = servers.concat(this.arbiters);
-servers = servers.concat(this.passives);
+    });
+  } else if(self.cursorState.limit &#x3e; 0 &#x26;&#x26; self.cursorState.currentLimit &#x3e;= self.cursorState.limit) {
+    // Ensure we kill the cursor on the server
+    self.kill();
+    // Set cursor in dead and notified state
+    return setCursorDeadAndNotified(self, callback);
+  } else if(self.cursorState.cursorIndex == self.cursorState.documents.length
+&#x26;&#x26; !Long.ZERO.<span class="apidocCodeKeywordSpan">equals</span>(self.cursorState.cursorId)) {
+// Ensure an empty cursor state
+self.cursorState.documents = [];
+self.cursorState.cursorIndex = 0;
 
-// Check if it&#x27;s active and this is just a failed connection attempt
-for(var i = 0; i &#x3c; servers.length; i++) {
-  if(!options.force
-    &#x26;&#x26; servers[i].<span class="apidocCodeKeywordSpan">equals</span>(server)
-    &#x26;&#x26; servers[i].isConnected
-    &#x26;&#x26; servers[i].isConnected()) {
-    return;
-  }
-}
-
-// If we have it in the set remove it
+// Check if topology is destroyed
+if(self.topology.isDestroyed()) return callback(new MongoError(&#x27;connection destroyed, not possible to instantiate cursor&#x27
+;));
 ...</pre></li>
     </ul>
 
@@ -9813,21 +9961,21 @@ module.exports = CommandResult;
   return this.toHexString();
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
-if(workItem.socketTimeout) {
-  connection.resetSocketTimeout();
-}
 
-// Log if debug enabled
-if(self.logger.isDebug()) {
-  self.logger.debug(f(&#x27;message [%s] received from %s:%s&#x27;
-    , message.raw.<span class="apidocCodeKeywordSpan">toString</span>(&#x27;hex&#x27;), self.options.host, self.options.port));
-}
+  // Execute MongoCR
+  var executeScram = function(connection) {
+// Clean up the user
+username = username.replace(&#x27;=&#x27;, &#x22;=3D&#x22;).replace(&#x27;,&#x27;, &#x27;=2C&#x27;);
 
-// Authenticate any straggler connections
-function authenticateStragglers(self, connection, callback) {
-  // Get any non authenticated connections
-  var connections = self.nonAuthenticatedConnections.slice(0);
-  var nonAuthenticatedConnections = self.nonAuthenticatedConnections;
+// Create a random nonce
+var nonce = crypto.randomBytes(24).<span class="apidocCodeKeywordSpan">toString</span>(&#x27;base64&#x27;);
+// var nonce = &#x27;MsQUY9iw0T9fx2MUEz6LZPwGuhVvWAhc&#x27;
+var firstBare = f(&#x22;n=%s,r=%s&#x22;, username, nonce);
+
+// Build command structure
+var cmd = {
+    saslStart: 1
+  , mechanism: &#x27;SCRAM-SHA-1&#x27;
 ...</pre></li>
     </ul>
 
@@ -9913,21 +10061,21 @@ module.exports = CommandResult;
   return this.value;
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
-if(workItem.socketTimeout) {
-  connection.resetSocketTimeout();
-}
 
-// Log if debug enabled
-if(self.logger.isDebug()) {
-  self.logger.debug(f(&#x27;message [%s] received from %s:%s&#x27;
-    , message.raw.<span class="apidocCodeKeywordSpan">toString</span>(&#x27;hex&#x27;), self.options.host, self.options.port));
-}
+  // Execute MongoCR
+  var executeScram = function(connection) {
+// Clean up the user
+username = username.replace(&#x27;=&#x27;, &#x22;=3D&#x22;).replace(&#x27;,&#x27;, &#x27;=2C&#x27;);
 
-// Authenticate any straggler connections
-function authenticateStragglers(self, connection, callback) {
-  // Get any non authenticated connections
-  var connections = self.nonAuthenticatedConnections.slice(0);
-  var nonAuthenticatedConnections = self.nonAuthenticatedConnections;
+// Create a random nonce
+var nonce = crypto.randomBytes(24).<span class="apidocCodeKeywordSpan">toString</span>(&#x27;base64&#x27;);
+// var nonce = &#x27;MsQUY9iw0T9fx2MUEz6LZPwGuhVvWAhc&#x27;
+var firstBare = f(&#x22;n=%s,r=%s&#x22;, username, nonce);
+
+// Build command structure
+var cmd = {
+    saslStart: 1
+  , mechanism: &#x27;SCRAM-SHA-1&#x27;
 ...</pre></li>
     </ul>
 
@@ -10044,21 +10192,20 @@ function authenticateStragglers(self, connection, callback) {
   }
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
-var doc = this.bson.deserialize(document, _options);
 
-// Get the documents
-this.documents = doc.cursor[documentsReturnedIn];
-this.numberReturned = this.documents.length;
-// Ensure we have a Long valie cursor id
-this.cursorId = typeof doc.cursor.id == &#x27;number&#x27;
-  ? Long.<span class="apidocCodeKeywordSpan">fromNumber</span>(doc.cursor.id)
-  : doc.cursor.id;
+  // Logger
+  this.logger = Logger(&#x27;Cursor&#x27;, topologyOptions);
 
-// Adjust the index
-this.index = this.index + bsonSize;
-
-// Set as parsed
-this.parsed = true
+  //
+  // Did we pass in a cursor id
+  if(typeof cmd == &#x27;number&#x27;) {
+    this.cursorState.cursorId = Long.<span class="apidocCodeKeywordSpan">fromNumber</span>(cmd);
+    this.cursorState.lastCursorId = this.cursorState.cursorId;
+  } else if(cmd instanceof Long) {
+    this.cursorState.cursorId = cmd;
+    this.cursorState.lastCursorId = cmd;
+  }
+}
 ...</pre></li>
     </ul>
 
@@ -10177,7 +10324,22 @@ this.parsed = true
   c48 &#x26;= 0xFFFF;
   return Timestamp.fromBits((c16 &#x3c;&#x3c; 16) | c00, (c48 &#x3c;&#x3c; 16) | c32);
 }</pre></li>
-    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+ */
+Mongos.prototype.insert = function(ns, ops, options, callback) {
+if(typeof options == &#x27;function&#x27;) callback = options, options = {}, options = options || {};
+if(this.state == DESTROYED) return callback(new MongoError(f(&#x27;topology was destroyed&#x27;)));
+
+// Not connected but we have a disconnecthandler
+if(!this.isConnected() &#x26;&#x26; this.s.disconnectHandler != null) {
+  return this.s.disconnectHandler.<span class="apidocCodeKeywordSpan">add</span>(&#x27;insert&#x27;, ns, ops, options, callback);
+}
+
+// No mongos proxy available
+if(!this.isConnected()) {
+  return callback(new MongoError(&#x27;no mongos proxy available&#x27;));
+}
+...</pre></li>
     </ul>
 
 
@@ -10346,21 +10508,21 @@ for (var i = 0; i &#x3c; len; i++) {
   return (this.high_ == other.high_) &#x26;&#x26; (this.low_ == other.low_);
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
-servers = servers.concat(this.secondaries);
-servers = servers.concat(this.arbiters);
-servers = servers.concat(this.passives);
+    });
+  } else if(self.cursorState.limit &#x3e; 0 &#x26;&#x26; self.cursorState.currentLimit &#x3e;= self.cursorState.limit) {
+    // Ensure we kill the cursor on the server
+    self.kill();
+    // Set cursor in dead and notified state
+    return setCursorDeadAndNotified(self, callback);
+  } else if(self.cursorState.cursorIndex == self.cursorState.documents.length
+&#x26;&#x26; !Long.ZERO.<span class="apidocCodeKeywordSpan">equals</span>(self.cursorState.cursorId)) {
+// Ensure an empty cursor state
+self.cursorState.documents = [];
+self.cursorState.cursorIndex = 0;
 
-// Check if it&#x27;s active and this is just a failed connection attempt
-for(var i = 0; i &#x3c; servers.length; i++) {
-  if(!options.force
-    &#x26;&#x26; servers[i].<span class="apidocCodeKeywordSpan">equals</span>(server)
-    &#x26;&#x26; servers[i].isConnected
-    &#x26;&#x26; servers[i].isConnected()) {
-    return;
-  }
-}
-
-// If we have it in the set remove it
+// Check if topology is destroyed
+if(self.topology.isDestroyed()) return callback(new MongoError(&#x27;connection destroyed, not possible to instantiate cursor&#x27
+;));
 ...</pre></li>
     </ul>
 
@@ -10543,7 +10705,24 @@ index = index + 4;
     <li>description and source-code<pre class="apidocCodePre">isZero = function () {
   return this.high_ == 0 &#x26;&#x26; this.low_ == 0;
 }</pre></li>
-    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+// Set cursor to dead
+this.cursorState.dead = true;
+this.cursorState.killed = true;
+// Remove documents
+this.cursorState.documents = [];
+
+// If no cursor id just return
+if(this.cursorState.cursorId == null || this.cursorState.cursorId.<span class="apidocCodeKeywordSpan">isZero</span>() || this.cursorState
+.init == false) {
+  if(callback) callback(null, null);
+  return;
+}
+
+// Default pool
+var pool = this.server.s.pool;
+// Execute command
+...</pre></li>
     </ul>
 
 
@@ -10948,21 +11127,21 @@ module.exports = CommandResult;
   }
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
-if(workItem.socketTimeout) {
-  connection.resetSocketTimeout();
-}
 
-// Log if debug enabled
-if(self.logger.isDebug()) {
-  self.logger.debug(f(&#x27;message [%s] received from %s:%s&#x27;
-    , message.raw.<span class="apidocCodeKeywordSpan">toString</span>(&#x27;hex&#x27;), self.options.host, self.options.port));
-}
+  // Execute MongoCR
+  var executeScram = function(connection) {
+// Clean up the user
+username = username.replace(&#x27;=&#x27;, &#x22;=3D&#x22;).replace(&#x27;,&#x27;, &#x27;=2C&#x27;);
 
-// Authenticate any straggler connections
-function authenticateStragglers(self, connection, callback) {
-  // Get any non authenticated connections
-  var connections = self.nonAuthenticatedConnections.slice(0);
-  var nonAuthenticatedConnections = self.nonAuthenticatedConnections;
+// Create a random nonce
+var nonce = crypto.randomBytes(24).<span class="apidocCodeKeywordSpan">toString</span>(&#x27;base64&#x27;);
+// var nonce = &#x27;MsQUY9iw0T9fx2MUEz6LZPwGuhVvWAhc&#x27;
+var firstBare = f(&#x22;n=%s,r=%s&#x22;, username, nonce);
+
+// Build command structure
+var cmd = {
+    saslStart: 1
+  , mechanism: &#x27;SCRAM-SHA-1&#x27;
 ...</pre></li>
     </ul>
 
@@ -11259,7 +11438,23 @@ buffers.push(query);
     <li>description and source-code<pre class="apidocCodePre">connections = function () {
   return connections;
 }</pre></li>
-    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+* @method
+* @return {Connection[]}
+*/
+Mongos.prototype.connections = function() {
+ var connections = [];
+
+ for(var i = 0; i &#x3c; this.connectedProxies.length; i++) {
+   connections = connections.concat(this.connectedProxies[i].<span class="apidocCodeKeywordSpan">connections</span>());
+ }
+
+ return connections;
+}
+
+/**
+* A mongos connect event, used to verify that the connection is up and running
+...</pre></li>
     </ul>
 
 
@@ -11407,23 +11602,14 @@ buffers.push(query);
   self.connection.on(&#x27;data&#x27;, dataHandler(self));
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
+  //       // _server.destroy();
+  //       // test.done();
+  //     });
+  //   });
+  // });
 });
 
-server.on(&#x27;reconnect&#x27;, function() {
-console.log(&#x27;reconnect&#x27;);
-});
-
-// Start connection
 server.<span class="apidocCodeKeywordSpan">connect</span>();
-```
-
-To connect to a replicaset we would use the `ReplSet` class and for a set of Mongos proxies we use the `Mongos` class. Each topology
- class offer the same CRUD operations and you operate on the topology directly. Let&#x27;s look at an example exercising all the
- different available CRUD operations.
-
-```js
-var Server = require(&#x27;mongodb-core&#x27;).Server
-, assert = require(&#x27;assert&#x27;);
 ...</pre></li>
     </ul>
 
@@ -11449,21 +11635,21 @@ var Server = require(&#x27;mongodb-core&#x27;).Server
   this.destroyed = true;
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
-          assert.equal(null, err);
-          assert.equal(2, doc.a);
-
-          // Execute the ismaster command
-          _server.command(&#x22;system.$cmd&#x22;
-            , {ismaster: true}, function(err, result) {
-              assert.equal(null, err)
-              _server.<span class="apidocCodeKeywordSpan">destroy</span>();
-          });
-        });
-    });
-  });
-
-  test.done();
-});
+//         console.log(&#x22;=========== joined :: &#x22; + _t + &#x22; :: &#x22; + _server.name)
+//         executeCursors(_server, function() {
+//         });
+//       }
+//     })
+//
+//     // var s = _server.s.replicaSetState.secondaries[0];
+//     // s.<span class="apidocCodeKeywordSpan">destroy</span>({emitClose:true});
+//     executeCursors(_server, function() {
+//       console.log(&#x22;============== 0&#x22;)
+//       // Attempt to force a server reconnect
+//       var s = _server.s.replicaSetState.secondaries[0];
+//       name = s.name;
+//       s.destroy({emitClose:true});
+//       // console.log(&#x22;============== 1&#x22;)
 ...</pre></li>
     </ul>
 
@@ -11481,21 +11667,21 @@ var Server = require(&#x27;mongodb-core&#x27;).Server
   return !this.connection.destroyed &#x26;&#x26; this.connection.writable;
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
+// We have a dead and killed cursor, attempting to call next should error
+if(isCursorDeadAndKilled(self, callback)) return;
 
-function attemptReconnect(self) {
-  return function() {
-self.emit(&#x27;attemptReconnect&#x27;, self);
-if(self.state == DESTROYED || self.state == DESTROYING) return;
-
-// We are connected do not try again
-if(self.<span class="apidocCodeKeywordSpan">isConnected</span>()) {
-  self.reconnectId = null;
-  return;
-}
-
-// If we have failure schedule a retry
-function _connectionFailureHandler(self) {
-  return function() {
+// We have just started the cursor
+if(!self.cursorState.init) {
+  // Topology is not connected, save the call in the provided store to be
+  // Executed at some point when the handler deems it&#x27;s reconnected
+  if(!self.topology.<span class="apidocCodeKeywordSpan">isConnected</span>(self.options) &#x26;&#x26; self.disconnectHandler !=
+null) {
+    if (self.topology.isDestroyed()) {
+      // Topology was destroyed, so don&#x27;t try to wait for it to reconnect
+      return callback(new MongoError(&#x27;Topology was destroyed&#x27;));
+    }
+    return self.disconnectHandler.addObjectAndMethod(&#x27;cursor&#x27;, self, &#x27;next&#x27;, [callback], callback);
+  }
 ...</pre></li>
     </ul>
 
@@ -11605,21 +11791,21 @@ module.exports = CommandResult;
   return &#x22;&#x22; + this.id;
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
-if(workItem.socketTimeout) {
-  connection.resetSocketTimeout();
-}
 
-// Log if debug enabled
-if(self.logger.isDebug()) {
-  self.logger.debug(f(&#x27;message [%s] received from %s:%s&#x27;
-    , message.raw.<span class="apidocCodeKeywordSpan">toString</span>(&#x27;hex&#x27;), self.options.host, self.options.port));
-}
+  // Execute MongoCR
+  var executeScram = function(connection) {
+// Clean up the user
+username = username.replace(&#x27;=&#x27;, &#x22;=3D&#x22;).replace(&#x27;,&#x27;, &#x27;=2C&#x27;);
 
-// Authenticate any straggler connections
-function authenticateStragglers(self, connection, callback) {
-  // Get any non authenticated connections
-  var connections = self.nonAuthenticatedConnections.slice(0);
-  var nonAuthenticatedConnections = self.nonAuthenticatedConnections;
+// Create a random nonce
+var nonce = crypto.randomBytes(24).<span class="apidocCodeKeywordSpan">toString</span>(&#x27;base64&#x27;);
+// var nonce = &#x27;MsQUY9iw0T9fx2MUEz6LZPwGuhVvWAhc&#x27;
+var firstBare = f(&#x22;n=%s,r=%s&#x22;, username, nonce);
+
+// Build command structure
+var cmd = {
+    saslStart: 1
+  , mechanism: &#x27;SCRAM-SHA-1&#x27;
 ...</pre></li>
     </ul>
 
@@ -11642,21 +11828,21 @@ function authenticateStragglers(self, connection, callback) {
   }
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
+
+/**
+ * Unref this connection
+ * @method
+ * @return {boolean}
  */
-Pool.prototype.unref = function() {
-  // Get all the known connections
-  var connections = this.availableConnections
-    .concat(this.inUseConnections)
-    .concat(this.connectingConnections);
-  connections.forEach(function(c) {
-    c.<span class="apidocCodeKeywordSpan">unref</span>();
-  });
+Connection.prototype.unref = function() {
+  if (this.connection) this.connection.<span class="apidocCodeKeywordSpan">unref</span>();
+  else {
+    var self = this;
+    this.once(&#x27;connect&#x27;, function() {
+      self.connection.unref();
+    });
+  }
 }
-
-// Events
-var events = [&#x27;error&#x27;, &#x27;close&#x27;, &#x27;timeout&#x27;, &#x27;parseError&#x27;, &#x27;connect&#x27;];
-
-// Destroy the connections
 ...</pre></li>
     </ul>
 
@@ -11687,21 +11873,20 @@ var events = [&#x27;error&#x27;, &#x27;close&#x27;, &#x27;timeout&#x27;, &#x27;p
   for(i = 0; i &#x3c; buffer.length; i++) this.connection.write(buffer[i], &#x27;binary&#x27;);
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
-header[index + 3] = (flags &#x3e;&#x3e; 24) &#x26; 0xff;
-header[index + 2] = (flags &#x3e;&#x3e; 16) &#x26; 0xff;
-header[index + 1] = (flags &#x3e;&#x3e; 8) &#x26; 0xff;
-header[index] = (flags) &#x26; 0xff;
-index = index + 4;
+}
 
-// Write collection name
-index = index + header.<span class="apidocCodeKeywordSpan">write</span>(this.ns, index, &#x27;utf8&#x27;) + 1;
-header[index - 1] = 0;
+// Add promote values if defined
+if(typeof self.cursorState.promoteBuffers == &#x27;boolean&#x27;) {
+  queryOptions.promoteBuffers = self.cursorState.promoteBuffers;
+}
+// Write the initial command out
+self.server.s.pool.<span class="apidocCodeKeywordSpan">write</span>(self.query, queryOptions, queryCallback);
+}
 
-// Write header information flags numberToSkip
-header[index + 3] = (this.numberToSkip &#x3e;&#x3e; 24) &#x26; 0xff;
-header[index + 2] = (this.numberToSkip &#x3e;&#x3e; 16) &#x26; 0xff;
-header[index + 1] = (this.numberToSkip &#x3e;&#x3e; 8) &#x26; 0xff;
-header[index] = (this.numberToSkip) &#x26; 0xff;
+Cursor.prototype._getmore = function(callback) {
+if(this.logger.isDebug()) this.logger.debug(f(&#x27;schedule getMore call for query [%s]&#x27;, JSON.stringify(this.query)))
+// Determine if it&#x27;s a raw query
+var raw = this.options.raw || this.cmd.raw;
 ...</pre></li>
     </ul>
 
@@ -11914,7 +12099,24 @@ header[index] = (this.numberToSkip) &#x26; 0xff;
   // Write the initial command out
   self.server.s.pool.write(self.query, queryOptions, queryCallback);
 }</pre></li>
-    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+    // execute the query against the db
+    if(isConnectionDead(self, callback)) return;
+
+    // Check if topology is destroyed
+    if(self.topology.isDestroyed()) return callback(new MongoError(&#x27;connection destroyed, not possible to instantiate cursor
+&#x27;));
+
+    // query, cmd, options, cursorState, callback
+    self.<span class="apidocCodeKeywordSpan">_find</span>(function(err) {
+if(err) return handleCallback(callback, err, null);
+
+if(self.cursorState.documents.length == 0
+  &#x26;&#x26; self.cursorState.cursorId &#x26;&#x26; self.cursorState.cursorId.isZero()
+  &#x26;&#x26; !self.cmd.tailable &#x26;&#x26; !self.cmd.awaitData) {
+  return setCursorNotified(self, callback);
+}
+...</pre></li>
     </ul>
 
 
@@ -11944,7 +12146,24 @@ header[index] = (this.numberToSkip) &#x26; 0xff;
   // We have a wire protocol handler
   this.server.wireProtocolHandler.getMore(this.bson, this.ns, this.cursorState, batchSize, raw, pool, this.options, callback);
 }</pre></li>
-    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+      if(self.topology.isDestroyed()) return callback(new MongoError(&#x27;connection destroyed, not possible to instantiate cursor
+&#x27;));
+
+      // Check if connection is dead and return if not possible to
+      // execute a getmore on this connection
+      if(isConnectionDead(self, callback)) return;
+
+      // Execute the next get more
+      self.<span class="apidocCodeKeywordSpan">_getmore</span>(function(err, doc, connection) {
+if(err) return handleCallback(callback, err);
+
+// Save the returned connection to ensure all getMore&#x27;s fire over the same connection
+self.connection = connection;
+
+// Tailable cursor getMore result, notify owner about it
+// No attempt is made here to retry, this is left to the user of the
+...</pre></li>
     </ul>
 
 
@@ -11974,7 +12193,23 @@ header[index] = (this.numberToSkip) &#x26; 0xff;
   // Execute command
   this.server.wireProtocolHandler.killCursor(this.bson, this.ns, this.cursorState.cursorId, pool, callback);
 }</pre></li>
-    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+
+/**
+* Kill the cursor
+* @method
+* @param {resultCallback} callback A callback function
+*/
+Cursor.prototype.kill = function(callback) {
+ this.<span class="apidocCodeKeywordSpan">_killcursor</span>(callback);
+}
+
+/**
+* Resets the cursor
+* @method
+* @return {null}
+*/
+...</pre></li>
     </ul>
 
 
@@ -12109,7 +12344,23 @@ header[index] = (this.numberToSkip) &#x26; 0xff;
     <li>description and source-code<pre class="apidocCodePre">kill = function (callback) {
   this._killcursor(callback);
 }</pre></li>
-    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+  }
+}
+
+// Ensure we do not return any more documents than the limit imposed
+// Just return the number of elements up to the limit
+if(this.cursorState.limit &#x3e; 0 &#x26;&#x26; (this.cursorState.currentLimit + elements.length) &#x3e; this.cursorState.limit) {
+  elements = elements.slice(0, (this.cursorState.limit - this.cursorState.currentLimit));
+  this.<span class="apidocCodeKeywordSpan">kill</span>();
+}
+
+// Adjust current limit
+this.cursorState.currentLimit = this.cursorState.currentLimit + elements.length;
+this.cursorState.cursorIndex = this.cursorState.cursorIndex + elements.length;
+
+// Return elements
+...</pre></li>
     </ul>
 
 
@@ -12125,21 +12376,20 @@ header[index] = (this.numberToSkip) &#x26; 0xff;
   nextFunction(this, callback);
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
-          // Get a document
-          var cursor = _server.cursor(&#x27;integration_tests.inserts_example4&#x27;, {
-  find: &#x27;integration_tests.example4&#x27;
-, query: {a:1}
-          });
-
-          // Get the first document
-          cursor.<span class="apidocCodeKeywordSpan">next</span>(function(err, doc) {
-assert.equal(null, err);
-assert.equal(2, doc.a);
-
-// Execute the ismaster command
-_server.command(&#x22;system.$cmd&#x22;
-  , {ismaster: true}, function(err, result) {
-    assert.equal(null, err)
+//     // Execute the write
+//     var cursor = _server.cursor(&#x27;test.test&#x27;, {
+//         find: &#x27;test.test&#x27;
+//       , query: {a:1}
+//     }, {readPreference: new ReadPreference(&#x27;secondary&#x27;)});
+//
+//     // Get the first document
+//     cursor.<span class="apidocCodeKeywordSpan">next</span>(function(err, doc) {
+//       count = count - 1;
+//       if(err) console.dir(err)
+//       if(count == 0) return cb();
+//     });
+//   }
+// }
 ...</pre></li>
     </ul>
 
@@ -12346,22 +12596,22 @@ _server.command(&#x22;system.$cmd&#x22;
   }
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
-});
-  }
-}
-
-server.on(&#x27;connect&#x27;, function(_server) {
-  console.log(&#x22;---------------------------------- 0&#x22;)
-  // Attempt authentication
-  _server.<span class="apidocCodeKeywordSpan">auth</span>(&#x27;scram-sha-1&#x27;, &#x27;admin&#x27;, &#x27;root&#x27;, &#x27;root
+setInterval(function() {
+  _server.insert(&#x27;test.test&#x27;, [{a:1}], function(err, r) {
+    console.log(&#x22;insert&#x22;)
+  });
+}, 1000)
+// console.log(&#x22;---------------------------------- 0&#x22;)
+// // Attempt authentication
+// _server.<span class="apidocCodeKeywordSpan">auth</span>(&#x27;scram-sha-1&#x27;, &#x27;admin&#x27;, &#x27;root&#x27;, &#x27;root
 &#x27;, function(err, r) {
-console.log(&#x22;---------------------------------- 1&#x22;)
-// console.dir(err)
-// console.dir(r)
-
-_server.insert(&#x27;test.test&#x27;, [{a:1}], function(err, r) {
-  console.log(&#x22;---------------------------------- 2&#x22;)
-  console.dir(err)
+//   console.log(&#x22;---------------------------------- 1&#x22;)
+//   // console.dir(err)
+//   // console.dir(r)
+//
+//   _server.insert(&#x27;test.test&#x27;, [{a:1}], function(err, r) {
+//     console.log(&#x22;---------------------------------- 2&#x22;)
+//     console.dir(err)
 ...</pre></li>
     </ul>
 
@@ -12379,7 +12629,23 @@ _server.insert(&#x27;test.test&#x27;, [{a:1}], function(err, r) {
     return x.db != dbName;
   });
 }</pre></li>
-    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+
+// Ensure no new members are processed while logging out
+this.authenticating = true;
+
+// Remove from all auth providers (avoid any reaplication of the auth details)
+var providers = Object.keys(this.authProviders);
+for(var i = 0; i &#x3c; providers.length; i++) {
+  this.authProviders[providers[i]].<span class="apidocCodeKeywordSpan">logout</span>(dbName);
+}
+
+// Now logout all the servers
+var servers = this.connectedProxies.slice(0);
+var count = servers.length;
+if(count == 0) return callback();
+var errors = [];
+...</pre></li>
     </ul>
 
 
@@ -12504,7 +12770,7 @@ function authenticateAgainstProvider(pool, connection, providers, cb) {
 * @param {string} db Name of database we are removing authStore details about
 * @return {object}
 */
-SSPI.prototype.logout = function(dbName) {
+GSSAPI.prototype.logout = function(dbName) {
  this.authStore = this.authStore.<span class="apidocCodeKeywordSpan">filter</span>(function(x) {
    return x.db != dbName;
  });
@@ -12595,21 +12861,20 @@ SSPI.prototype.logout = function(dbName) {
   }
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
-// this operation
-if(workItem.socketTimeout) {
-  connection.resetSocketTimeout();
 }
 
-// Log if debug enabled
+// Internal methods
+Cursor.prototype._find = function(callback) {
+var self = this;
+
 if(self.logger.isDebug()) {
-  self.logger.<span class="apidocCodeKeywordSpan">debug</span>(f(&#x27;message [%s] received from %s:%s&#x27;
-    , message.raw.toString(&#x27;hex&#x27;), self.options.host, self.options.port));
+  self.logger.<span class="apidocCodeKeywordSpan">debug</span>(f(&#x27;issue initial query [%s] with flags [%s]&#x27;
+    , JSON.stringify(self.cmd)
+    , JSON.stringify(self.query)));
 }
 
-// Authenticate any straggler connections
-function authenticateStragglers(self, connection, callback) {
-  // Get any non authenticated connections
-  var connections = self.nonAuthenticatedConnections.slice(0);
+var queryCallback = function(err, r) {
+  if(err) return callback(err);
 ...</pre></li>
     </ul>
 
@@ -12636,22 +12901,20 @@ function authenticateStragglers(self, connection, callback) {
   }
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
-}
+  connectionTimeout: 10000,
+});
 
-// Get current state
-var legalStates = legalTransitions[self.state];
-if(legalStates &#x26;&#x26; legalStates.indexOf(newState) != -1) {
-  self.state = newState;
-} else {
-  self.logger.<span class="apidocCodeKeywordSpan">error</span>(f(&#x27;Pool with id [%s] failed attempted illegal state transition
- from [%s] to [%s] only following state allowed [%s]&#x27;
-    , self.id, self.state, newState, legalStates));
-}
-}
-
-function authenticate(pool, auth, connection, cb) {
-if(auth[0] === undefined) return cb(null);
-// We need to authenticate the server
+replSet.on(&#x27;connect&#x27;, function(_server) {
+  setInterval(function() {
+    _server.command(&#x27;system.$cmd&#x27;, { ping: 1 }, function(err, result) {
+      if (err) {
+        console.<span class="apidocCodeKeywordSpan">error</span>(err);
+      } else {
+        console.log(result.result);
+      }
+    });
+  }, 1000);
+});
 ...</pre></li>
     </ul>
 
@@ -12677,7 +12940,23 @@ if(auth[0] === undefined) return cb(null);
     currentLogger(msg, state);
   }
 }</pre></li>
-    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+}
+
+var eventHandler = function(self, event) {
+  return function(err) {
+// Log information of received information if in info mode
+if(self.s.logger.isInfo()) {
+  var object = err instanceof MongoError ? JSON.stringify(err) : {}
+  self.s.logger.<span class="apidocCodeKeywordSpan">info</span>(f(&#x27;server %s fired event %s out with message %s&#x27;
+    , self.name, event, object));
+}
+
+// Handle connect event
+if(event == &#x27;connect&#x27;) {
+  // Issue an ismaster command at connect
+  // Query options
+...</pre></li>
     </ul>
 
 
@@ -12693,21 +12972,21 @@ if(auth[0] === undefined) return cb(null);
   return level == &#x27;debug&#x27;;
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
-// Reset the connection timeout if we modified it for
-// this operation
-if(workItem.socketTimeout) {
-  connection.resetSocketTimeout();
+}
 }
 
-// Log if debug enabled
+// Internal methods
+Cursor.prototype._find = function(callback) {
+var self = this;
+
 if(self.logger.<span class="apidocCodeKeywordSpan">isDebug</span>()) {
-  self.logger.debug(f(&#x27;message [%s] received from %s:%s&#x27;
-    , message.raw.toString(&#x27;hex&#x27;), self.options.host, self.options.port));
+  self.logger.debug(f(&#x27;issue initial query [%s] with flags [%s]&#x27;
+    , JSON.stringify(self.cmd)
+    , JSON.stringify(self.query)));
 }
 
-// Authenticate any straggler connections
-function authenticateStragglers(self, connection, callback) {
-  // Get any non authenticated connections
+var queryCallback = function(err, r) {
+  if(err) return callback(err);
 ...</pre></li>
     </ul>
 
@@ -12724,21 +13003,21 @@ function authenticateStragglers(self, connection, callback) {
   return level == &#x27;error&#x27; || level == &#x27;info&#x27; || level == &#x27;debug&#x27;;
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
-// Auth finished
-self.authenticating = false;
-// Add the connections back to available connections
-self.availableConnections = self.availableConnections.concat(connections);
-// We had an error, return it
-if(error) {
-  // Log the error
-  if(self.logger.<span class="apidocCodeKeywordSpan">isError</span>()) {
-    self.logger.error(f(&#x27;[%s] failed to authenticate against server %s:%s&#x27;
-      , self.id, self.options.host, self.options.port));
-  }
-
-  return cb(error);
-}
-cb(null);
+ * Log a message at the error level
+ * @method
+ * @param {string} message The message to log
+ * @param {object} object additional meta data to log
+ * @return {null}
+ */
+Logger.prototype.error = function(message, object) {
+if(this.<span class="apidocCodeKeywordSpan">isError</span>()
+  &#x26;&#x26; ((Object.keys(filteredClasses).length &#x3e; 0 &#x26;&#x26; filteredClasses[this.className])
+    || (Object.keys(filteredClasses).length == 0 &#x26;&#x26; classFilters[this.className]))) {
+  var dateTime = new Date().getTime();
+  var msg = f(&#x22;[%s-%s:%s] %s %s&#x22;, &#x27;ERROR&#x27;, this.className, pid, dateTime, message);
+  var state = {
+    type: &#x27;error&#x27;, message: message, className: this.className, pid: pid, date: dateTime
+  };
 ...</pre></li>
     </ul>
 
@@ -12754,7 +13033,23 @@ cb(null);
     <li>description and source-code<pre class="apidocCodePre">isInfo = function () {
   return level == &#x27;info&#x27; || level == &#x27;debug&#x27;;
 }</pre></li>
-    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+ * Log a message at the info level
+ * @method
+ * @param {string} message The message to log
+ * @param {object} object additional meta data to log
+ * @return {null}
+ */
+Logger.prototype.info = function(message, object) {
+if(this.<span class="apidocCodeKeywordSpan">isInfo</span>()
+  &#x26;&#x26; ((Object.keys(filteredClasses).length &#x3e; 0 &#x26;&#x26; filteredClasses[this.className])
+    || (Object.keys(filteredClasses).length == 0 &#x26;&#x26; classFilters[this.className]))) {
+  var dateTime = new Date().getTime();
+  var msg = f(&#x22;[%s-%s:%s] %s %s&#x22;, &#x27;INFO&#x27;, this.className, pid, dateTime, message);
+  var state = {
+    type: &#x27;info&#x27;, message: message, className: this.className, pid: pid, date: dateTime
+  };
+...</pre></li>
     </ul>
 
 
@@ -12770,22 +13065,21 @@ cb(null);
   return level == &#x27;error&#x27; || level == &#x27;warn&#x27; || level == &#x27;info&#x27; || level == &#x27;debug&#x27;;
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
-return false;
-  }
-
-  //
-  // If the .me field does not match the passed in server
-  //
-  if(ismaster.me &#x26;&#x26; ismaster.me.toLowerCase() != serverName) {
-if(this.logger.<span class="apidocCodeKeywordSpan">isWarn</span>()) {
-  this.logger.warn(f(&#x27;the seedlist server was removed due to its address %s not matching its ismaster.me address %s&#x27;,
-server.name, ismaster.me));
-}
-
-// Delete from the set
-delete this.set[serverName];
-// Delete unknown servers
-removeFrom(server, self.unknownServers);
+ * Log a message at the warn level
+ * @method
+ * @param {string} message The message to log
+ * @param {object} object additional meta data to log
+ * @return {null}
+ */
+Logger.prototype.warn = function(message, object) {
+if(this.<span class="apidocCodeKeywordSpan">isWarn</span>()
+  &#x26;&#x26; ((Object.keys(filteredClasses).length &#x3e; 0 &#x26;&#x26; filteredClasses[this.className])
+    || (Object.keys(filteredClasses).length == 0 &#x26;&#x26; classFilters[this.className]))) {
+  var dateTime = new Date().getTime();
+  var msg = f(&#x22;[%s-%s:%s] %s %s&#x22;, &#x27;WARN&#x27;, this.className, pid, dateTime, message);
+  var state = {
+    type: &#x27;warn&#x27;, message: message, className: this.className, pid: pid, date: dateTime
+  };
 ...</pre></li>
     </ul>
 
@@ -12812,21 +13106,22 @@ removeFrom(server, self.unknownServers);
   }
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
-  }
+this.s.options.clientInfo = createClientInfo(options);
 
-  //
-  // If the .me field does not match the passed in server
-  //
-  if(ismaster.me &#x26;&#x26; ismaster.me.toLowerCase() != serverName) {
-if(this.logger.isWarn()) {
-  this.logger.<span class="apidocCodeKeywordSpan">warn</span>(f(&#x27;the seedlist server was removed due to its address %s not
-matching its ismaster.me address %s&#x27;, server.name, ismaster.me));
+// Log info warning if the socketTimeout &#x3c; haInterval as it will cause
+// a lot of recycled connections to happen.
+if(this.s.logger.isWarn()
+  &#x26;&#x26; this.s.options.socketTimeout != 0
+  &#x26;&#x26; this.s.options.socketTimeout &#x3c; this.s.haInterval) {
+    this.s.logger.<span class="apidocCodeKeywordSpan">warn</span>(f(&#x27;warning socketTimeout %s is less than haInterval %s. This
+ might cause unnecessary server reconnections due to socket timeouts&#x27;
+      , this.s.options.socketTimeout, this.s.haInterval));
 }
 
-// Delete from the set
-delete this.set[serverName];
-// Delete unknown servers
-removeFrom(server, self.unknownServers);
+// All the authProviders
+this.authProviders = options.authProviders || {
+    &#x27;mongocr&#x27;: new MongoCR(this.s.bson), &#x27;x509&#x27;: new X509(this.s.bson)
+  , &#x27;plain&#x27;: new Plain(this.s.bson), &#x27;gssapi&#x27;: new GSSAPI(this.s.bson)
 ...</pre></li>
     </ul>
 
@@ -12947,22 +13242,22 @@ removeFrom(server, self.unknownServers);
   }
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
-});
-  }
-}
-
-server.on(&#x27;connect&#x27;, function(_server) {
-  console.log(&#x22;---------------------------------- 0&#x22;)
-  // Attempt authentication
-  _server.<span class="apidocCodeKeywordSpan">auth</span>(&#x27;scram-sha-1&#x27;, &#x27;admin&#x27;, &#x27;root&#x27;, &#x27;root
+setInterval(function() {
+  _server.insert(&#x27;test.test&#x27;, [{a:1}], function(err, r) {
+    console.log(&#x22;insert&#x22;)
+  });
+}, 1000)
+// console.log(&#x22;---------------------------------- 0&#x22;)
+// // Attempt authentication
+// _server.<span class="apidocCodeKeywordSpan">auth</span>(&#x27;scram-sha-1&#x27;, &#x27;admin&#x27;, &#x27;root&#x27;, &#x27;root
 &#x27;, function(err, r) {
-console.log(&#x22;---------------------------------- 1&#x22;)
-// console.dir(err)
-// console.dir(r)
-
-_server.insert(&#x27;test.test&#x27;, [{a:1}], function(err, r) {
-  console.log(&#x22;---------------------------------- 2&#x22;)
-  console.dir(err)
+//   console.log(&#x22;---------------------------------- 1&#x22;)
+//   // console.dir(err)
+//   // console.dir(r)
+//
+//   _server.insert(&#x27;test.test&#x27;, [{a:1}], function(err, r) {
+//     console.log(&#x22;---------------------------------- 2&#x22;)
+//     console.dir(err)
 ...</pre></li>
     </ul>
 
@@ -12980,7 +13275,23 @@ _server.insert(&#x27;test.test&#x27;, [{a:1}], function(err, r) {
     return x.db != dbName;
   });
 }</pre></li>
-    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+
+// Ensure no new members are processed while logging out
+this.authenticating = true;
+
+// Remove from all auth providers (avoid any reaplication of the auth details)
+var providers = Object.keys(this.authProviders);
+for(var i = 0; i &#x3c; providers.length; i++) {
+  this.authProviders[providers[i]].<span class="apidocCodeKeywordSpan">logout</span>(dbName);
+}
+
+// Now logout all the servers
+var servers = this.connectedProxies.slice(0);
+var count = servers.length;
+if(count == 0) return callback();
+var errors = [];
+...</pre></li>
     </ul>
 
 
@@ -13075,22 +13386,21 @@ function authenticateAgainstProvider(pool, connection, providers, cb) {
   return err;
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
+if(err) return callback(err);
 
-      // Time to dispatch the message if we have a callback
-      if(!workItem.immediateRelease) {
-try {
-  // Parse the message according to the provided options
-  message.parse(workItem);
-} catch(err) {
-  return handleOperationCallback(self, workItem.cb, MongoError.<span class="apidocCodeKeywordSpan">create</span>(err));
+// Get the raw message
+var result = r.message;
+
+// Query failure bit set
+if(result.queryFailure) {
+  return callback(MongoError.<span class="apidocCodeKeywordSpan">create</span>(result.documents[0]), null);
 }
 
-// Establish if we have an error
-if(workItem.command &#x26;&#x26; message.documents[0] &#x26;&#x26; (message.documents[0].ok == 0 || message.documents[0][&#x27;$
-err&#x27;]
-|| message.documents[0][&#x27;errmsg&#x27;] || message.documents[0][&#x27;code&#x27;])) {
-  return handleOperationCallback(self, workItem.cb, MongoError.create(message.documents[0]));
-}
+// Check if we have a command cursor
+if(Array.isArray(result.documents) &#x26;&#x26; result.documents.length == 1
+  &#x26;&#x26; (!self.cmd.find || (self.cmd.find &#x26;&#x26; self.cmd.virtual == false))
+  &#x26;&#x26; (result.documents[0].cursor != &#x27;string&#x27;
+    || result.documents[0][&#x27;$err&#x27;]
 ...</pre></li>
     </ul>
 
@@ -13302,22 +13612,22 @@ err&#x27;]
   }
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
-});
-  }
-}
-
-server.on(&#x27;connect&#x27;, function(_server) {
-  console.log(&#x22;---------------------------------- 0&#x22;)
-  // Attempt authentication
-  _server.<span class="apidocCodeKeywordSpan">auth</span>(&#x27;scram-sha-1&#x27;, &#x27;admin&#x27;, &#x27;root&#x27;, &#x27;root
+setInterval(function() {
+  _server.insert(&#x27;test.test&#x27;, [{a:1}], function(err, r) {
+    console.log(&#x22;insert&#x22;)
+  });
+}, 1000)
+// console.log(&#x22;---------------------------------- 0&#x22;)
+// // Attempt authentication
+// _server.<span class="apidocCodeKeywordSpan">auth</span>(&#x27;scram-sha-1&#x27;, &#x27;admin&#x27;, &#x27;root&#x27;, &#x27;root
 &#x27;, function(err, r) {
-console.log(&#x22;---------------------------------- 1&#x22;)
-// console.dir(err)
-// console.dir(r)
-
-_server.insert(&#x27;test.test&#x27;, [{a:1}], function(err, r) {
-  console.log(&#x22;---------------------------------- 2&#x22;)
-  console.dir(err)
+//   console.log(&#x22;---------------------------------- 1&#x22;)
+//   // console.dir(err)
+//   // console.dir(r)
+//
+//   _server.insert(&#x27;test.test&#x27;, [{a:1}], function(err, r) {
+//     console.log(&#x22;---------------------------------- 2&#x22;)
+//     console.dir(err)
 ...</pre></li>
     </ul>
 
@@ -13406,23 +13716,14 @@ _server.insert(&#x27;myproject.inserts1&#x27;, [{a:1}, {a:2}], {
   connectProxies(self, servers);
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
+  //       // _server.destroy();
+  //       // test.done();
+  //     });
+  //   });
+  // });
 });
 
-server.on(&#x27;reconnect&#x27;, function() {
-console.log(&#x27;reconnect&#x27;);
-});
-
-// Start connection
 server.<span class="apidocCodeKeywordSpan">connect</span>();
-```
-
-To connect to a replicaset we would use the `ReplSet` class and for a set of Mongos proxies we use the `Mongos` class. Each topology
- class offer the same CRUD operations and you operate on the topology directly. Let&#x27;s look at an example exercising all the
- different available CRUD operations.
-
-```js
-var Server = require(&#x27;mongodb-core&#x27;).Server
-, assert = require(&#x27;assert&#x27;);
 ...</pre></li>
     </ul>
 
@@ -13444,7 +13745,23 @@ var Server = require(&#x27;mongodb-core&#x27;).Server
 
   return connections;
 }</pre></li>
-    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+* @method
+* @return {Connection[]}
+*/
+Mongos.prototype.connections = function() {
+ var connections = [];
+
+ for(var i = 0; i &#x3c; this.connectedProxies.length; i++) {
+   connections = connections.concat(this.connectedProxies[i].<span class="apidocCodeKeywordSpan">connections</span>());
+ }
+
+ return connections;
+}
+
+/**
+* A mongos connect event, used to verify that the connection is up and running
+...</pre></li>
     </ul>
 
 
@@ -13462,21 +13779,21 @@ var Server = require(&#x27;mongodb-core&#x27;).Server
   return new FinalCursor(this.s.bson, ns, cmd, cursorOptions, this, this.s.options);
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
-        }], {
-writeConcern: {w:1}, ordered:true
-        }, function(err, results) {
-assert.equal(null, err);
-assert.equal(1, results.result.n);
-
-// Get a document
-var cursor = _server.<span class="apidocCodeKeywordSpan">cursor</span>(&#x27;integration_tests.inserts_example4&#x27;, {
-    find: &#x27;integration_tests.example4&#x27;
-  , query: {a:1}
 });
 
-// Get the first document
-cursor.next(function(err, doc) {
-  assert.equal(null, err);
+// function executeCursors(_server, cb) {
+//   var count = 100;
+//
+//   for(var i = 0; i &#x3c; 100; i++) {
+//     // Execute the write
+//     var cursor = _server.<span class="apidocCodeKeywordSpan">cursor</span>(&#x27;test.test&#x27;, {
+//         find: &#x27;test.test&#x27;
+//       , query: {a:1}
+//     }, {readPreference: new ReadPreference(&#x27;secondary&#x27;)});
+//
+//     // Get the first document
+//     cursor.next(function(err, doc) {
+//       count = count - 1;
 ...</pre></li>
     </ul>
 
@@ -13508,21 +13825,21 @@ cursor.next(function(err, doc) {
   emitSDAMEvent(this, &#x27;topologyClosed&#x27;, { topologyId: this.id });
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
-          assert.equal(null, err);
-          assert.equal(2, doc.a);
-
-          // Execute the ismaster command
-          _server.command(&#x22;system.$cmd&#x22;
-            , {ismaster: true}, function(err, result) {
-              assert.equal(null, err)
-              _server.<span class="apidocCodeKeywordSpan">destroy</span>();
-          });
-        });
-    });
-  });
-
-  test.done();
-});
+//         console.log(&#x22;=========== joined :: &#x22; + _t + &#x22; :: &#x22; + _server.name)
+//         executeCursors(_server, function() {
+//         });
+//       }
+//     })
+//
+//     // var s = _server.s.replicaSetState.secondaries[0];
+//     // s.<span class="apidocCodeKeywordSpan">destroy</span>({emitClose:true});
+//     executeCursors(_server, function() {
+//       console.log(&#x22;============== 0&#x22;)
+//       // Attempt to force a server reconnect
+//       var s = _server.s.replicaSetState.secondaries[0];
+//       name = s.name;
+//       s.destroy({emitClose:true});
+//       // console.log(&#x22;============== 1&#x22;)
 ...</pre></li>
     </ul>
 
@@ -13539,7 +13856,23 @@ cursor.next(function(err, doc) {
   var server = this.getServer();
   if(server) return server.getConnection();
 }</pre></li>
-    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+/**
+* Get a direct connection
+* @method
+* @return {Connection}
+*/
+Mongos.prototype.getConnection = function() {
+ var server = this.getServer();
+ if(server) return server.<span class="apidocCodeKeywordSpan">getConnection</span>();
+}
+
+/**
+* All raw connections
+* @method
+* @return {Connection[]}
+*/
+...</pre></li>
     </ul>
 
 
@@ -13556,7 +13889,23 @@ cursor.next(function(err, doc) {
   if(this.s.debug) this.emit(&#x27;pickedServer&#x27;, null, server);
   return server;
 }</pre></li>
-    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+  // Topology was destroyed, so don&#x27;t try to wait for it to reconnect
+  return callback(new MongoError(&#x27;Topology was destroyed&#x27;));
+}
+return self.disconnectHandler.addObjectAndMethod(&#x27;cursor&#x27;, self, &#x27;next&#x27;, [callback], callback);
+    }
+
+    try {
+self.server = self.topology.<span class="apidocCodeKeywordSpan">getServer</span>(self.options);
+    } catch(err) {
+// Handle the error and add object to next method call
+if(self.disconnectHandler != null) {
+  return self.disconnectHandler.addObjectAndMethod(&#x27;cursor&#x27;, self, &#x27;next&#x27;, [callback], callback);
+}
+
+// Otherwise return the error
+...</pre></li>
     </ul>
 
 
@@ -13586,21 +13935,21 @@ cursor.next(function(err, doc) {
   executeWriteOperation(this, &#x27;insert&#x27;, ns, ops, options, callback);
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
+//     });
+//   }
+// }
+
 server.on(&#x27;connect&#x27;, function(_server) {
-  console.log(&#x27;connected&#x27;);
-
-  // Execute the ismaster command
-  _server.command(&#x27;system.$cmd&#x27;, {ismaster: true}, function(err, result) {
-
-    // Perform a document insert
-    _server.<span class="apidocCodeKeywordSpan">insert</span>(&#x27;myproject.inserts1&#x27;, [{a:1}, {a:2}], {
-writeConcern: {w:1}, ordered:true
-    }, function(err, results) {
-assert.equal(null, err);
-assert.equal(2, results.result.n);
-
-// Perform a document update
-_server.update(&#x27;myproject.inserts1&#x27;, [{
+// console.log(&#x22;===== connect&#x22;)
+setInterval(function() {
+  _server.<span class="apidocCodeKeywordSpan">insert</span>(&#x27;test.test&#x27;, [{a:1}], function(err, r) {
+    console.log(&#x22;insert&#x22;)
+  });
+}, 1000)
+// console.log(&#x22;---------------------------------- 0&#x22;)
+// // Attempt authentication
+// _server.auth(&#x27;scram-sha-1&#x27;, &#x27;admin&#x27;, &#x27;root&#x27;, &#x27;root&#x27;, function(err, r) {
+//   console.log(&#x22;---------------------------------- 1&#x22;)
 ...</pre></li>
     </ul>
 
@@ -13617,21 +13966,21 @@ _server.update(&#x27;myproject.inserts1&#x27;, [{
   return this.connectedProxies.length &#x3e; 0;
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
+// We have a dead and killed cursor, attempting to call next should error
+if(isCursorDeadAndKilled(self, callback)) return;
 
-function attemptReconnect(self) {
-  return function() {
-self.emit(&#x27;attemptReconnect&#x27;, self);
-if(self.state == DESTROYED || self.state == DESTROYING) return;
-
-// We are connected do not try again
-if(self.<span class="apidocCodeKeywordSpan">isConnected</span>()) {
-  self.reconnectId = null;
-  return;
-}
-
-// If we have failure schedule a retry
-function _connectionFailureHandler(self) {
-  return function() {
+// We have just started the cursor
+if(!self.cursorState.init) {
+  // Topology is not connected, save the call in the provided store to be
+  // Executed at some point when the handler deems it&#x27;s reconnected
+  if(!self.topology.<span class="apidocCodeKeywordSpan">isConnected</span>(self.options) &#x26;&#x26; self.disconnectHandler !=
+null) {
+    if (self.topology.isDestroyed()) {
+      // Topology was destroyed, so don&#x27;t try to wait for it to reconnect
+      return callback(new MongoError(&#x27;Topology was destroyed&#x27;));
+    }
+    return self.disconnectHandler.addObjectAndMethod(&#x27;cursor&#x27;, self, &#x27;next&#x27;, [callback], callback);
+  }
 ...</pre></li>
     </ul>
 
@@ -13647,7 +13996,23 @@ function _connectionFailureHandler(self) {
     <li>description and source-code<pre class="apidocCodePre">isDestroyed = function () {
   return this.state == DESTROYED;
 }</pre></li>
-    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+}
+
+/**
+ * Validate if the pool is dead and return error
+ */
+var isConnectionDead = function(self, callback) {
+if(self.pool
+  &#x26;&#x26; self.pool.<span class="apidocCodeKeywordSpan">isDestroyed</span>()) {
+  self.cursorState.notified = true;
+  self.cursorState.killed = true;
+  self.cursorState.documents = [];
+  self.cursorState.cursorIndex = 0;
+  callback(MongoError.create(f(&#x27;connection to host %s:%s was destroyed&#x27;, self.pool.host, self.pool.port)))
+  return true;
+}
+...</pre></li>
     </ul>
 
 
@@ -13663,21 +14028,21 @@ function _connectionFailureHandler(self) {
   return this.ismaster;
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
-  this.emit(&#x27;left&#x27;, removeType, server);
-}
-}
+    }
 
-ReplSetState.prototype.update = function(server) {
-var self = this;
-// Get the current ismaster
-var ismaster = server.<span class="apidocCodeKeywordSpan">lastIsMaster</span>();
+    // Check the type of server
+    if(event == &#x27;connect&#x27;) {
+      // Do we have authentication contexts that need to be applied
+      applyAuthenticationContexts(self, _this, function() {
+// Get last known ismaster
+self.ismaster = _this.<span class="apidocCodeKeywordSpan">lastIsMaster</span>();
 
-// Get the server name and lowerCase it
-var serverName = server.name.toLowerCase();
-
-//
-// Add any hosts
-//
+// Is this not a proxy, remove t
+if(self.ismaster.msg == &#x27;isdbgrid&#x27;) {
+  // Add to the connectd list
+  for(var i = 0; i &#x3c; self.connectedProxies.length; i++) {
+    if(self.connectedProxies[i].name == _this.name) {
+      // Move from connectingProxies
 ...</pre></li>
     </ul>
 
@@ -13738,7 +14103,23 @@ var serverName = server.name.toLowerCase();
     })
   }
 }</pre></li>
-    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+
+// Ensure no new members are processed while logging out
+this.authenticating = true;
+
+// Remove from all auth providers (avoid any reaplication of the auth details)
+var providers = Object.keys(this.authProviders);
+for(var i = 0; i &#x3c; providers.length; i++) {
+  this.authProviders[providers[i]].<span class="apidocCodeKeywordSpan">logout</span>(dbName);
+}
+
+// Now logout all the servers
+var servers = this.connectedProxies.slice(0);
+var count = servers.length;
+if(count == 0) return callback();
+var errors = [];
+...</pre></li>
     </ul>
 
 
@@ -13806,21 +14187,21 @@ _server.<span class="apidocCodeKeywordSpan">remove</span>(&#x27;myproject.insert
   clearTimeout(this.haTimeoutId);
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
+
+/**
+ * Unref this connection
+ * @method
+ * @return {boolean}
  */
-Pool.prototype.unref = function() {
-  // Get all the known connections
-  var connections = this.availableConnections
-    .concat(this.inUseConnections)
-    .concat(this.connectingConnections);
-  connections.forEach(function(c) {
-    c.<span class="apidocCodeKeywordSpan">unref</span>();
-  });
+Connection.prototype.unref = function() {
+  if (this.connection) this.connection.<span class="apidocCodeKeywordSpan">unref</span>();
+  else {
+    var self = this;
+    this.once(&#x27;connect&#x27;, function() {
+      self.connection.unref();
+    });
+  }
 }
-
-// Events
-var events = [&#x27;error&#x27;, &#x27;close&#x27;, &#x27;timeout&#x27;, &#x27;parseError&#x27;, &#x27;connect&#x27;];
-
-// Destroy the connections
 ...</pre></li>
     </ul>
 
@@ -13973,22 +14354,22 @@ _server.<span class="apidocCodeKeywordSpan">update</span>(&#x27;myproject.insert
   }
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
-});
-  }
-}
-
-server.on(&#x27;connect&#x27;, function(_server) {
-  console.log(&#x22;---------------------------------- 0&#x22;)
-  // Attempt authentication
-  _server.<span class="apidocCodeKeywordSpan">auth</span>(&#x27;scram-sha-1&#x27;, &#x27;admin&#x27;, &#x27;root&#x27;, &#x27;root
+setInterval(function() {
+  _server.insert(&#x27;test.test&#x27;, [{a:1}], function(err, r) {
+    console.log(&#x22;insert&#x22;)
+  });
+}, 1000)
+// console.log(&#x22;---------------------------------- 0&#x22;)
+// // Attempt authentication
+// _server.<span class="apidocCodeKeywordSpan">auth</span>(&#x27;scram-sha-1&#x27;, &#x27;admin&#x27;, &#x27;root&#x27;, &#x27;root
 &#x27;, function(err, r) {
-console.log(&#x22;---------------------------------- 1&#x22;)
-// console.dir(err)
-// console.dir(r)
-
-_server.insert(&#x27;test.test&#x27;, [{a:1}], function(err, r) {
-  console.log(&#x22;---------------------------------- 2&#x22;)
-  console.dir(err)
+//   console.log(&#x22;---------------------------------- 1&#x22;)
+//   // console.dir(err)
+//   // console.dir(r)
+//
+//   _server.insert(&#x27;test.test&#x27;, [{a:1}], function(err, r) {
+//     console.log(&#x22;---------------------------------- 2&#x22;)
+//     console.dir(err)
 ...</pre></li>
     </ul>
 
@@ -14006,7 +14387,23 @@ _server.insert(&#x27;test.test&#x27;, [{a:1}], function(err, r) {
     return x.db != dbName;
   });
 }</pre></li>
-    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+
+// Ensure no new members are processed while logging out
+this.authenticating = true;
+
+// Remove from all auth providers (avoid any reaplication of the auth details)
+var providers = Object.keys(this.authProviders);
+for(var i = 0; i &#x3c; providers.length; i++) {
+  this.authProviders[providers[i]].<span class="apidocCodeKeywordSpan">logout</span>(dbName);
+}
+
+// Now logout all the servers
+var servers = this.connectedProxies.slice(0);
+var count = servers.length;
+if(count == 0) return callback();
+var errors = [];
+...</pre></li>
     </ul>
 
 
@@ -14394,21 +14791,21 @@ function authenticateAgainstProvider(pool, connection, providers, cb) {
   return readPreference.preference == this.preference;
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
-servers = servers.concat(this.secondaries);
-servers = servers.concat(this.arbiters);
-servers = servers.concat(this.passives);
+    });
+  } else if(self.cursorState.limit &#x3e; 0 &#x26;&#x26; self.cursorState.currentLimit &#x3e;= self.cursorState.limit) {
+    // Ensure we kill the cursor on the server
+    self.kill();
+    // Set cursor in dead and notified state
+    return setCursorDeadAndNotified(self, callback);
+  } else if(self.cursorState.cursorIndex == self.cursorState.documents.length
+&#x26;&#x26; !Long.ZERO.<span class="apidocCodeKeywordSpan">equals</span>(self.cursorState.cursorId)) {
+// Ensure an empty cursor state
+self.cursorState.documents = [];
+self.cursorState.cursorIndex = 0;
 
-// Check if it&#x27;s active and this is just a failed connection attempt
-for(var i = 0; i &#x3c; servers.length; i++) {
-  if(!options.force
-    &#x26;&#x26; servers[i].<span class="apidocCodeKeywordSpan">equals</span>(server)
-    &#x26;&#x26; servers[i].isConnected
-    &#x26;&#x26; servers[i].isConnected()) {
-    return;
-  }
-}
-
-// If we have it in the set remove it
+// Check if topology is destroyed
+if(self.topology.isDestroyed()) return callback(new MongoError(&#x27;connection destroyed, not possible to instantiate cursor&#x27
+;));
 ...</pre></li>
     </ul>
 
@@ -14425,21 +14822,21 @@ for(var i = 0; i &#x3c; servers.length; i++) {
   return needSlaveOk.indexOf(this.preference) != -1;
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
-var query = new Query(bson, ns, findCmd, {
-    numberToSkip: numberToSkip, numberToReturn: numberToReturn
-  , checkKeys: false, returnFieldSelector: cmd.fields
-  , serializeFunctions: serializeFunctions, ignoreUndefined: ignoreUndefined
-});
+};
 
-// Set query flags
-query.slaveOk = readPreference.<span class="apidocCodeKeywordSpan">slaveOk</span>();
+// Are we executing against a specific topology
+var topology = options.topology || {};
+// Create the query object
+var query = self.wireProtocolHandler.command(self.s.bson, ns, cmd, {}, topology, options);
+// Set slave OK of the query
+query.slaveOk = options.readPreference ? options.readPreference.<span class="apidocCodeKeywordSpan">slaveOk</span>() : false;
 
-// Set up the option bits for wire protocol
-if(typeof cmd.tailable == &#x27;boolean&#x27;) query.tailable = cmd.tailable;
-if(typeof cmd.oplogReplay == &#x27;boolean&#x27;) query.oplogReplay = cmd.oplogReplay;
-if(typeof cmd.noCursorTimeout == &#x27;boolean&#x27;) query.noCursorTimeout = cmd.noCursorTimeout;
-if(typeof cmd.awaitData == &#x27;boolean&#x27;) query.awaitData = cmd.awaitData;
-if(typeof cmd.partial == &#x27;boolean&#x27;) query.partial = cmd.partial;
+// Write options
+var writeOptions = {
+  raw: typeof options.raw == &#x27;boolean&#x27; ? options.raw : false,
+  promoteLongs: typeof options.promoteLongs == &#x27;boolean&#x27; ? options.promoteLongs : true,
+  promoteValues: typeof options.promoteValues == &#x27;boolean&#x27; ? options.promoteValues : true,
+  promoteBuffers: typeof options.promoteBuffers == &#x27;boolean&#x27; ? options.promoteBuffers : false,
 ...</pre></li>
     </ul>
 
@@ -14723,22 +15120,22 @@ module.exports = CommandResult;
   }
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
-});
-  }
-}
-
-server.on(&#x27;connect&#x27;, function(_server) {
-  console.log(&#x22;---------------------------------- 0&#x22;)
-  // Attempt authentication
-  _server.<span class="apidocCodeKeywordSpan">auth</span>(&#x27;scram-sha-1&#x27;, &#x27;admin&#x27;, &#x27;root&#x27;, &#x27;root
+setInterval(function() {
+  _server.insert(&#x27;test.test&#x27;, [{a:1}], function(err, r) {
+    console.log(&#x22;insert&#x22;)
+  });
+}, 1000)
+// console.log(&#x22;---------------------------------- 0&#x22;)
+// // Attempt authentication
+// _server.<span class="apidocCodeKeywordSpan">auth</span>(&#x27;scram-sha-1&#x27;, &#x27;admin&#x27;, &#x27;root&#x27;, &#x27;root
 &#x27;, function(err, r) {
-console.log(&#x22;---------------------------------- 1&#x22;)
-// console.dir(err)
-// console.dir(r)
-
-_server.insert(&#x27;test.test&#x27;, [{a:1}], function(err, r) {
-  console.log(&#x22;---------------------------------- 2&#x22;)
-  console.dir(err)
+//   console.log(&#x22;---------------------------------- 1&#x22;)
+//   // console.dir(err)
+//   // console.dir(r)
+//
+//   _server.insert(&#x27;test.test&#x27;, [{a:1}], function(err, r) {
+//     console.log(&#x22;---------------------------------- 2&#x22;)
+//     console.dir(err)
 ...</pre></li>
     </ul>
 
@@ -14840,23 +15237,14 @@ _server.insert(&#x27;myproject.inserts1&#x27;, [{a:1}, {a:2}], {
   connectServers(self, servers);
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
+  //       // _server.destroy();
+  //       // test.done();
+  //     });
+  //   });
+  // });
 });
 
-server.on(&#x27;reconnect&#x27;, function() {
-console.log(&#x27;reconnect&#x27;);
-});
-
-// Start connection
 server.<span class="apidocCodeKeywordSpan">connect</span>();
-```
-
-To connect to a replicaset we would use the `ReplSet` class and for a set of Mongos proxies we use the `Mongos` class. Each topology
- class offer the same CRUD operations and you operate on the topology directly. Let&#x27;s look at an example exercising all the
- different available CRUD operations.
-
-```js
-var Server = require(&#x27;mongodb-core&#x27;).Server
-, assert = require(&#x27;assert&#x27;);
 ...</pre></li>
     </ul>
 
@@ -14878,7 +15266,23 @@ var Server = require(&#x27;mongodb-core&#x27;).Server
 
   return connections;
 }</pre></li>
-    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+* @method
+* @return {Connection[]}
+*/
+Mongos.prototype.connections = function() {
+ var connections = [];
+
+ for(var i = 0; i &#x3c; this.connectedProxies.length; i++) {
+   connections = connections.concat(this.connectedProxies[i].<span class="apidocCodeKeywordSpan">connections</span>());
+ }
+
+ return connections;
+}
+
+/**
+* A mongos connect event, used to verify that the connection is up and running
+...</pre></li>
     </ul>
 
 
@@ -14896,21 +15300,21 @@ var Server = require(&#x27;mongodb-core&#x27;).Server
   return new FinalCursor(this.s.bson, ns, cmd, cursorOptions, this, this.s.options);
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
-        }], {
-writeConcern: {w:1}, ordered:true
-        }, function(err, results) {
-assert.equal(null, err);
-assert.equal(1, results.result.n);
-
-// Get a document
-var cursor = _server.<span class="apidocCodeKeywordSpan">cursor</span>(&#x27;integration_tests.inserts_example4&#x27;, {
-    find: &#x27;integration_tests.example4&#x27;
-  , query: {a:1}
 });
 
-// Get the first document
-cursor.next(function(err, doc) {
-  assert.equal(null, err);
+// function executeCursors(_server, cb) {
+//   var count = 100;
+//
+//   for(var i = 0; i &#x3c; 100; i++) {
+//     // Execute the write
+//     var cursor = _server.<span class="apidocCodeKeywordSpan">cursor</span>(&#x27;test.test&#x27;, {
+//         find: &#x27;test.test&#x27;
+//       , query: {a:1}
+//     }, {readPreference: new ReadPreference(&#x27;secondary&#x27;)});
+//
+//     // Get the first document
+//     cursor.next(function(err, doc) {
+//       count = count - 1;
 ...</pre></li>
     </ul>
 
@@ -14952,21 +15356,21 @@ cursor.next(function(err, doc) {
   emitSDAMEvent(this, &#x27;topologyClosed&#x27;, { topologyId: this.id });
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
-          assert.equal(null, err);
-          assert.equal(2, doc.a);
-
-          // Execute the ismaster command
-          _server.command(&#x22;system.$cmd&#x22;
-            , {ismaster: true}, function(err, result) {
-              assert.equal(null, err)
-              _server.<span class="apidocCodeKeywordSpan">destroy</span>();
-          });
-        });
-    });
-  });
-
-  test.done();
-});
+//         console.log(&#x22;=========== joined :: &#x22; + _t + &#x22; :: &#x22; + _server.name)
+//         executeCursors(_server, function() {
+//         });
+//       }
+//     })
+//
+//     // var s = _server.s.replicaSetState.secondaries[0];
+//     // s.<span class="apidocCodeKeywordSpan">destroy</span>({emitClose:true});
+//     executeCursors(_server, function() {
+//       console.log(&#x22;============== 0&#x22;)
+//       // Attempt to force a server reconnect
+//       var s = _server.s.replicaSetState.secondaries[0];
+//       name = s.name;
+//       s.destroy({emitClose:true});
+//       // console.log(&#x22;============== 1&#x22;)
 ...</pre></li>
     </ul>
 
@@ -14983,7 +15387,23 @@ cursor.next(function(err, doc) {
   var server = this.getServer(options);
   if(server) return server.getConnection();
 }</pre></li>
-    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+/**
+* Get a direct connection
+* @method
+* @return {Connection}
+*/
+Mongos.prototype.getConnection = function() {
+ var server = this.getServer();
+ if(server) return server.<span class="apidocCodeKeywordSpan">getConnection</span>();
+}
+
+/**
+* All raw connections
+* @method
+* @return {Connection[]}
+*/
+...</pre></li>
     </ul>
 
 
@@ -15003,7 +15423,23 @@ cursor.next(function(err, doc) {
   if(this.s.debug) this.emit(&#x27;pickedServer&#x27;, options.readPreference, server);
   return server;
 }</pre></li>
-    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+  // Topology was destroyed, so don&#x27;t try to wait for it to reconnect
+  return callback(new MongoError(&#x27;Topology was destroyed&#x27;));
+}
+return self.disconnectHandler.addObjectAndMethod(&#x27;cursor&#x27;, self, &#x27;next&#x27;, [callback], callback);
+    }
+
+    try {
+self.server = self.topology.<span class="apidocCodeKeywordSpan">getServer</span>(self.options);
+    } catch(err) {
+// Handle the error and add object to next method call
+if(self.disconnectHandler != null) {
+  return self.disconnectHandler.addObjectAndMethod(&#x27;cursor&#x27;, self, &#x27;next&#x27;, [callback], callback);
+}
+
+// Otherwise return the error
+...</pre></li>
     </ul>
 
 
@@ -15043,21 +15479,21 @@ cursor.next(function(err, doc) {
   executeWriteOperation(this, &#x27;insert&#x27;, ns, ops, options, callback);
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
+//     });
+//   }
+// }
+
 server.on(&#x27;connect&#x27;, function(_server) {
-  console.log(&#x27;connected&#x27;);
-
-  // Execute the ismaster command
-  _server.command(&#x27;system.$cmd&#x27;, {ismaster: true}, function(err, result) {
-
-    // Perform a document insert
-    _server.<span class="apidocCodeKeywordSpan">insert</span>(&#x27;myproject.inserts1&#x27;, [{a:1}, {a:2}], {
-writeConcern: {w:1}, ordered:true
-    }, function(err, results) {
-assert.equal(null, err);
-assert.equal(2, results.result.n);
-
-// Perform a document update
-_server.update(&#x27;myproject.inserts1&#x27;, [{
+// console.log(&#x22;===== connect&#x22;)
+setInterval(function() {
+  _server.<span class="apidocCodeKeywordSpan">insert</span>(&#x27;test.test&#x27;, [{a:1}], function(err, r) {
+    console.log(&#x22;insert&#x22;)
+  });
+}, 1000)
+// console.log(&#x22;---------------------------------- 0&#x22;)
+// // Attempt authentication
+// _server.auth(&#x27;scram-sha-1&#x27;, &#x27;admin&#x27;, &#x27;root&#x27;, &#x27;root&#x27;, function(err, r) {
+//   console.log(&#x22;---------------------------------- 1&#x22;)
 ...</pre></li>
     </ul>
 
@@ -15107,21 +15543,21 @@ _server.update(&#x27;myproject.inserts1&#x27;, [{
   return this.s.replicaSetState.hasPrimary();
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
+// We have a dead and killed cursor, attempting to call next should error
+if(isCursorDeadAndKilled(self, callback)) return;
 
-function attemptReconnect(self) {
-  return function() {
-self.emit(&#x27;attemptReconnect&#x27;, self);
-if(self.state == DESTROYED || self.state == DESTROYING) return;
-
-// We are connected do not try again
-if(self.<span class="apidocCodeKeywordSpan">isConnected</span>()) {
-  self.reconnectId = null;
-  return;
-}
-
-// If we have failure schedule a retry
-function _connectionFailureHandler(self) {
-  return function() {
+// We have just started the cursor
+if(!self.cursorState.init) {
+  // Topology is not connected, save the call in the provided store to be
+  // Executed at some point when the handler deems it&#x27;s reconnected
+  if(!self.topology.<span class="apidocCodeKeywordSpan">isConnected</span>(self.options) &#x26;&#x26; self.disconnectHandler !=
+null) {
+    if (self.topology.isDestroyed()) {
+      // Topology was destroyed, so don&#x27;t try to wait for it to reconnect
+      return callback(new MongoError(&#x27;Topology was destroyed&#x27;));
+    }
+    return self.disconnectHandler.addObjectAndMethod(&#x27;cursor&#x27;, self, &#x27;next&#x27;, [callback], callback);
+  }
 ...</pre></li>
     </ul>
 
@@ -15137,7 +15573,23 @@ function _connectionFailureHandler(self) {
     <li>description and source-code<pre class="apidocCodePre">isDestroyed = function () {
   return this.state == DESTROYED;
 }</pre></li>
-    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+}
+
+/**
+ * Validate if the pool is dead and return error
+ */
+var isConnectionDead = function(self, callback) {
+if(self.pool
+  &#x26;&#x26; self.pool.<span class="apidocCodeKeywordSpan">isDestroyed</span>()) {
+  self.cursorState.notified = true;
+  self.cursorState.killed = true;
+  self.cursorState.documents = [];
+  self.cursorState.cursorIndex = 0;
+  callback(MongoError.create(f(&#x27;connection to host %s:%s was destroyed&#x27;, self.pool.host, self.pool.port)))
+  return true;
+}
+...</pre></li>
     </ul>
 
 
@@ -15162,21 +15614,21 @@ function _connectionFailureHandler(self) {
     ? this.s.replicaSetState.primary.lastIsMaster() : this.ismaster;
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
-  this.emit(&#x27;left&#x27;, removeType, server);
-}
-}
+    }
 
-ReplSetState.prototype.update = function(server) {
-var self = this;
-// Get the current ismaster
-var ismaster = server.<span class="apidocCodeKeywordSpan">lastIsMaster</span>();
+    // Check the type of server
+    if(event == &#x27;connect&#x27;) {
+      // Do we have authentication contexts that need to be applied
+      applyAuthenticationContexts(self, _this, function() {
+// Get last known ismaster
+self.ismaster = _this.<span class="apidocCodeKeywordSpan">lastIsMaster</span>();
 
-// Get the server name and lowerCase it
-var serverName = server.name.toLowerCase();
-
-//
-// Add any hosts
-//
+// Is this not a proxy, remove t
+if(self.ismaster.msg == &#x27;isdbgrid&#x27;) {
+  // Add to the connectd list
+  for(var i = 0; i &#x3c; self.connectedProxies.length; i++) {
+    if(self.connectedProxies[i].name == _this.name) {
+      // Move from connectingProxies
 ...</pre></li>
     </ul>
 
@@ -15242,7 +15694,23 @@ var serverName = server.name.toLowerCase();
     })
   }
 }</pre></li>
-    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+
+// Ensure no new members are processed while logging out
+this.authenticating = true;
+
+// Remove from all auth providers (avoid any reaplication of the auth details)
+var providers = Object.keys(this.authProviders);
+for(var i = 0; i &#x3c; providers.length; i++) {
+  this.authProviders[providers[i]].<span class="apidocCodeKeywordSpan">logout</span>(dbName);
+}
+
+// Now logout all the servers
+var servers = this.connectedProxies.slice(0);
+var count = servers.length;
+if(count == 0) return callback();
+var errors = [];
+...</pre></li>
     </ul>
 
 
@@ -15304,21 +15772,21 @@ _server.<span class="apidocCodeKeywordSpan">remove</span>(&#x27;myproject.insert
   clearTimeout(this.haTimeoutId);
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
+
+/**
+ * Unref this connection
+ * @method
+ * @return {boolean}
  */
-Pool.prototype.unref = function() {
-  // Get all the known connections
-  var connections = this.availableConnections
-    .concat(this.inUseConnections)
-    .concat(this.connectingConnections);
-  connections.forEach(function(c) {
-    c.<span class="apidocCodeKeywordSpan">unref</span>();
-  });
+Connection.prototype.unref = function() {
+  if (this.connection) this.connection.<span class="apidocCodeKeywordSpan">unref</span>();
+  else {
+    var self = this;
+    this.once(&#x27;connect&#x27;, function() {
+      self.connection.unref();
+    });
+  }
 }
-
-// Events
-var events = [&#x27;error&#x27;, &#x27;close&#x27;, &#x27;timeout&#x27;, &#x27;parseError&#x27;, &#x27;connect&#x27;];
-
-// Destroy the connections
 ...</pre></li>
     </ul>
 
@@ -15524,22 +15992,22 @@ _server.<span class="apidocCodeKeywordSpan">update</span>(&#x27;myproject.insert
       // Create client proof
       var clientProof = f(&#x22;p=%s&#x22;, new Buffer(xor(clientKey, clientSig)).toStri ...</pre></li>
     <li>example usage<pre class="apidocCodePre">...
-});
-  }
-}
-
-server.on(&#x27;connect&#x27;, function(_server) {
-  console.log(&#x22;---------------------------------- 0&#x22;)
-  // Attempt authentication
-  _server.<span class="apidocCodeKeywordSpan">auth</span>(&#x27;scram-sha-1&#x27;, &#x27;admin&#x27;, &#x27;root&#x27;, &#x27;root
+setInterval(function() {
+  _server.insert(&#x27;test.test&#x27;, [{a:1}], function(err, r) {
+    console.log(&#x22;insert&#x22;)
+  });
+}, 1000)
+// console.log(&#x22;---------------------------------- 0&#x22;)
+// // Attempt authentication
+// _server.<span class="apidocCodeKeywordSpan">auth</span>(&#x27;scram-sha-1&#x27;, &#x27;admin&#x27;, &#x27;root&#x27;, &#x27;root
 &#x27;, function(err, r) {
-console.log(&#x22;---------------------------------- 1&#x22;)
-// console.dir(err)
-// console.dir(r)
-
-_server.insert(&#x27;test.test&#x27;, [{a:1}], function(err, r) {
-  console.log(&#x22;---------------------------------- 2&#x22;)
-  console.dir(err)
+//   console.log(&#x22;---------------------------------- 1&#x22;)
+//   // console.dir(err)
+//   // console.dir(r)
+//
+//   _server.insert(&#x27;test.test&#x27;, [{a:1}], function(err, r) {
+//     console.log(&#x22;---------------------------------- 2&#x22;)
+//     console.dir(err)
 ...</pre></li>
     </ul>
 
@@ -15557,7 +16025,23 @@ _server.insert(&#x27;test.test&#x27;, [{a:1}], function(err, r) {
     return x.db != dbName;
   });
 }</pre></li>
-    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+
+// Ensure no new members are processed while logging out
+this.authenticating = true;
+
+// Remove from all auth providers (avoid any reaplication of the auth details)
+var providers = Object.keys(this.authProviders);
+for(var i = 0; i &#x3c; providers.length; i++) {
+  this.authProviders[providers[i]].<span class="apidocCodeKeywordSpan">logout</span>(dbName);
+}
+
+// Now logout all the servers
+var servers = this.connectedProxies.slice(0);
+var count = servers.length;
+if(count == 0) return callback();
+var errors = [];
+...</pre></li>
     </ul>
 
 
@@ -15788,22 +16272,22 @@ function authenticateAgainstProvider(pool, connection, providers, cb) {
   self.s.pool.auth.apply(self.s.pool, args);
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
-});
-  }
-}
-
-server.on(&#x27;connect&#x27;, function(_server) {
-  console.log(&#x22;---------------------------------- 0&#x22;)
-  // Attempt authentication
-  _server.<span class="apidocCodeKeywordSpan">auth</span>(&#x27;scram-sha-1&#x27;, &#x27;admin&#x27;, &#x27;root&#x27;, &#x27;root
+setInterval(function() {
+  _server.insert(&#x27;test.test&#x27;, [{a:1}], function(err, r) {
+    console.log(&#x22;insert&#x22;)
+  });
+}, 1000)
+// console.log(&#x22;---------------------------------- 0&#x22;)
+// // Attempt authentication
+// _server.<span class="apidocCodeKeywordSpan">auth</span>(&#x27;scram-sha-1&#x27;, &#x27;admin&#x27;, &#x27;root&#x27;, &#x27;root
 &#x27;, function(err, r) {
-console.log(&#x22;---------------------------------- 1&#x22;)
-// console.dir(err)
-// console.dir(r)
-
-_server.insert(&#x27;test.test&#x27;, [{a:1}], function(err, r) {
-  console.log(&#x22;---------------------------------- 2&#x22;)
-  console.dir(err)
+//   console.log(&#x22;---------------------------------- 1&#x22;)
+//   // console.dir(err)
+//   // console.dir(r)
+//
+//   _server.insert(&#x27;test.test&#x27;, [{a:1}], function(err, r) {
+//     console.log(&#x22;---------------------------------- 2&#x22;)
+//     console.dir(err)
 ...</pre></li>
     </ul>
 
@@ -15941,23 +16425,14 @@ _server.insert(&#x27;myproject.inserts1&#x27;, [{a:1}, {a:2}], {
   }
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
+  //       // _server.destroy();
+  //       // test.done();
+  //     });
+  //   });
+  // });
 });
 
-server.on(&#x27;reconnect&#x27;, function() {
-console.log(&#x27;reconnect&#x27;);
-});
-
-// Start connection
 server.<span class="apidocCodeKeywordSpan">connect</span>();
-```
-
-To connect to a replicaset we would use the `ReplSet` class and for a set of Mongos proxies we use the `Mongos` class. Each topology
- class offer the same CRUD operations and you operate on the topology directly. Let&#x27;s look at an example exercising all the
- different available CRUD operations.
-
-```js
-var Server = require(&#x27;mongodb-core&#x27;).Server
-, assert = require(&#x27;assert&#x27;);
 ...</pre></li>
     </ul>
 
@@ -15973,7 +16448,23 @@ var Server = require(&#x27;mongodb-core&#x27;).Server
     <li>description and source-code<pre class="apidocCodePre">connections = function () {
   return this.s.pool.allConnections();
 }</pre></li>
-    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+* @method
+* @return {Connection[]}
+*/
+Mongos.prototype.connections = function() {
+ var connections = [];
+
+ for(var i = 0; i &#x3c; this.connectedProxies.length; i++) {
+   connections = connections.concat(this.connectedProxies[i].<span class="apidocCodeKeywordSpan">connections</span>());
+ }
+
+ return connections;
+}
+
+/**
+* A mongos connect event, used to verify that the connection is up and running
+...</pre></li>
     </ul>
 
 
@@ -15994,21 +16485,21 @@ var Server = require(&#x27;mongodb-core&#x27;).Server
   return new FinalCursor(s.bson, ns, cmd, cursorOptions, this, s.options);
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
-        }], {
-writeConcern: {w:1}, ordered:true
-        }, function(err, results) {
-assert.equal(null, err);
-assert.equal(1, results.result.n);
-
-// Get a document
-var cursor = _server.<span class="apidocCodeKeywordSpan">cursor</span>(&#x27;integration_tests.inserts_example4&#x27;, {
-    find: &#x27;integration_tests.example4&#x27;
-  , query: {a:1}
 });
 
-// Get the first document
-cursor.next(function(err, doc) {
-  assert.equal(null, err);
+// function executeCursors(_server, cb) {
+//   var count = 100;
+//
+//   for(var i = 0; i &#x3c; 100; i++) {
+//     // Execute the write
+//     var cursor = _server.<span class="apidocCodeKeywordSpan">cursor</span>(&#x27;test.test&#x27;, {
+//         find: &#x27;test.test&#x27;
+//       , query: {a:1}
+//     }, {readPreference: new ReadPreference(&#x27;secondary&#x27;)});
+//
+//     // Get the first document
+//     cursor.next(function(err, doc) {
+//       count = count - 1;
 ...</pre></li>
     </ul>
 
@@ -16069,21 +16560,21 @@ cursor.next(function(err, doc) {
   this.s.pool.destroy(options.force);
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
-          assert.equal(null, err);
-          assert.equal(2, doc.a);
-
-          // Execute the ismaster command
-          _server.command(&#x22;system.$cmd&#x22;
-            , {ismaster: true}, function(err, result) {
-              assert.equal(null, err)
-              _server.<span class="apidocCodeKeywordSpan">destroy</span>();
-          });
-        });
-    });
-  });
-
-  test.done();
-});
+//         console.log(&#x22;=========== joined :: &#x22; + _t + &#x22; :: &#x22; + _server.name)
+//         executeCursors(_server, function() {
+//         });
+//       }
+//     })
+//
+//     // var s = _server.s.replicaSetState.secondaries[0];
+//     // s.<span class="apidocCodeKeywordSpan">destroy</span>({emitClose:true});
+//     executeCursors(_server, function() {
+//       console.log(&#x22;============== 0&#x22;)
+//       // Attempt to force a server reconnect
+//       var s = _server.s.replicaSetState.secondaries[0];
+//       name = s.name;
+//       s.destroy({emitClose:true});
+//       // console.log(&#x22;============== 1&#x22;)
 ...</pre></li>
     </ul>
 
@@ -16102,21 +16593,21 @@ cursor.next(function(err, doc) {
   return false;
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
-servers = servers.concat(this.secondaries);
-servers = servers.concat(this.arbiters);
-servers = servers.concat(this.passives);
+    });
+  } else if(self.cursorState.limit &#x3e; 0 &#x26;&#x26; self.cursorState.currentLimit &#x3e;= self.cursorState.limit) {
+    // Ensure we kill the cursor on the server
+    self.kill();
+    // Set cursor in dead and notified state
+    return setCursorDeadAndNotified(self, callback);
+  } else if(self.cursorState.cursorIndex == self.cursorState.documents.length
+&#x26;&#x26; !Long.ZERO.<span class="apidocCodeKeywordSpan">equals</span>(self.cursorState.cursorId)) {
+// Ensure an empty cursor state
+self.cursorState.documents = [];
+self.cursorState.cursorIndex = 0;
 
-// Check if it&#x27;s active and this is just a failed connection attempt
-for(var i = 0; i &#x3c; servers.length; i++) {
-  if(!options.force
-    &#x26;&#x26; servers[i].<span class="apidocCodeKeywordSpan">equals</span>(server)
-    &#x26;&#x26; servers[i].isConnected
-    &#x26;&#x26; servers[i].isConnected()) {
-    return;
-  }
-}
-
-// If we have it in the set remove it
+// Check if topology is destroyed
+if(self.topology.isDestroyed()) return callback(new MongoError(&#x27;connection destroyed, not possible to instantiate cursor&#x27
+;));
 ...</pre></li>
     </ul>
 
@@ -16132,7 +16623,23 @@ for(var i = 0; i &#x3c; servers.length; i++) {
     <li>description and source-code<pre class="apidocCodePre">getConnection = function () {
   return this.s.pool.get();
 }</pre></li>
-    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+/**
+* Get a direct connection
+* @method
+* @return {Connection}
+*/
+Mongos.prototype.getConnection = function() {
+ var server = this.getServer();
+ if(server) return server.<span class="apidocCodeKeywordSpan">getConnection</span>();
+}
+
+/**
+* All raw connections
+* @method
+* @return {Connection[]}
+*/
+...</pre></li>
     </ul>
 
 
@@ -16189,7 +16696,23 @@ description.servers = description.servers.concat(self.secondaries.map(function(x
     <li>description and source-code<pre class="apidocCodePre">getServer = function () {
   return this;
 }</pre></li>
-    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+  // Topology was destroyed, so don&#x27;t try to wait for it to reconnect
+  return callback(new MongoError(&#x27;Topology was destroyed&#x27;));
+}
+return self.disconnectHandler.addObjectAndMethod(&#x27;cursor&#x27;, self, &#x27;next&#x27;, [callback], callback);
+    }
+
+    try {
+self.server = self.topology.<span class="apidocCodeKeywordSpan">getServer</span>(self.options);
+    } catch(err) {
+// Handle the error and add object to next method call
+if(self.disconnectHandler != null) {
+  return self.disconnectHandler.addObjectAndMethod(&#x27;cursor&#x27;, self, &#x27;next&#x27;, [callback], callback);
+}
+
+// Otherwise return the error
+...</pre></li>
     </ul>
 
 
@@ -16217,21 +16740,21 @@ description.servers = description.servers.concat(self.secondaries.map(function(x
   return self.wireProtocolHandler.insert(self.s.pool, self.ismaster, ns, self.s.bson, ops, options, callback);
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
+//     });
+//   }
+// }
+
 server.on(&#x27;connect&#x27;, function(_server) {
-  console.log(&#x27;connected&#x27;);
-
-  // Execute the ismaster command
-  _server.command(&#x27;system.$cmd&#x27;, {ismaster: true}, function(err, result) {
-
-    // Perform a document insert
-    _server.<span class="apidocCodeKeywordSpan">insert</span>(&#x27;myproject.inserts1&#x27;, [{a:1}, {a:2}], {
-writeConcern: {w:1}, ordered:true
-    }, function(err, results) {
-assert.equal(null, err);
-assert.equal(2, results.result.n);
-
-// Perform a document update
-_server.update(&#x27;myproject.inserts1&#x27;, [{
+// console.log(&#x22;===== connect&#x22;)
+setInterval(function() {
+  _server.<span class="apidocCodeKeywordSpan">insert</span>(&#x27;test.test&#x27;, [{a:1}], function(err, r) {
+    console.log(&#x22;insert&#x22;)
+  });
+}, 1000)
+// console.log(&#x22;---------------------------------- 0&#x22;)
+// // Attempt authentication
+// _server.auth(&#x27;scram-sha-1&#x27;, &#x27;admin&#x27;, &#x27;root&#x27;, &#x27;root&#x27;, function(err, r) {
+//   console.log(&#x22;---------------------------------- 1&#x22;)
 ...</pre></li>
     </ul>
 
@@ -16249,21 +16772,21 @@ _server.update(&#x27;myproject.inserts1&#x27;, [{
   return this.s.pool.isConnected();
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
+// We have a dead and killed cursor, attempting to call next should error
+if(isCursorDeadAndKilled(self, callback)) return;
 
-function attemptReconnect(self) {
-  return function() {
-self.emit(&#x27;attemptReconnect&#x27;, self);
-if(self.state == DESTROYED || self.state == DESTROYING) return;
-
-// We are connected do not try again
-if(self.<span class="apidocCodeKeywordSpan">isConnected</span>()) {
-  self.reconnectId = null;
-  return;
-}
-
-// If we have failure schedule a retry
-function _connectionFailureHandler(self) {
-  return function() {
+// We have just started the cursor
+if(!self.cursorState.init) {
+  // Topology is not connected, save the call in the provided store to be
+  // Executed at some point when the handler deems it&#x27;s reconnected
+  if(!self.topology.<span class="apidocCodeKeywordSpan">isConnected</span>(self.options) &#x26;&#x26; self.disconnectHandler !=
+null) {
+    if (self.topology.isDestroyed()) {
+      // Topology was destroyed, so don&#x27;t try to wait for it to reconnect
+      return callback(new MongoError(&#x27;Topology was destroyed&#x27;));
+    }
+    return self.disconnectHandler.addObjectAndMethod(&#x27;cursor&#x27;, self, &#x27;next&#x27;, [callback], callback);
+  }
 ...</pre></li>
     </ul>
 
@@ -16280,7 +16803,23 @@ function _connectionFailureHandler(self) {
   if(!this.s.pool) return false;
   return this.s.pool.isDestroyed();
 }</pre></li>
-    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+}
+
+/**
+ * Validate if the pool is dead and return error
+ */
+var isConnectionDead = function(self, callback) {
+if(self.pool
+  &#x26;&#x26; self.pool.<span class="apidocCodeKeywordSpan">isDestroyed</span>()) {
+  self.cursorState.notified = true;
+  self.cursorState.killed = true;
+  self.cursorState.documents = [];
+  self.cursorState.cursorIndex = 0;
+  callback(MongoError.create(f(&#x27;connection to host %s:%s was destroyed&#x27;, self.pool.host, self.pool.port)))
+  return true;
+}
+...</pre></li>
     </ul>
 
 
@@ -16296,21 +16835,21 @@ function _connectionFailureHandler(self) {
   return this.ismaster;
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
-  this.emit(&#x27;left&#x27;, removeType, server);
-}
-}
+    }
 
-ReplSetState.prototype.update = function(server) {
-var self = this;
-// Get the current ismaster
-var ismaster = server.<span class="apidocCodeKeywordSpan">lastIsMaster</span>();
+    // Check the type of server
+    if(event == &#x27;connect&#x27;) {
+      // Do we have authentication contexts that need to be applied
+      applyAuthenticationContexts(self, _this, function() {
+// Get last known ismaster
+self.ismaster = _this.<span class="apidocCodeKeywordSpan">lastIsMaster</span>();
 
-// Get the server name and lowerCase it
-var serverName = server.name.toLowerCase();
-
-//
-// Add any hosts
-//
+// Is this not a proxy, remove t
+if(self.ismaster.msg == &#x27;isdbgrid&#x27;) {
+  // Add to the connectd list
+  for(var i = 0; i &#x3c; self.connectedProxies.length; i++) {
+    if(self.connectedProxies[i].name == _this.name) {
+      // Move from connectingProxies
 ...</pre></li>
     </ul>
 
@@ -16326,7 +16865,23 @@ var serverName = server.name.toLowerCase();
     <li>description and source-code<pre class="apidocCodePre">logout = function (dbName, callback) {
   this.s.pool.logout(dbName, callback);
 }</pre></li>
-    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+
+// Ensure no new members are processed while logging out
+this.authenticating = true;
+
+// Remove from all auth providers (avoid any reaplication of the auth details)
+var providers = Object.keys(this.authProviders);
+for(var i = 0; i &#x3c; providers.length; i++) {
+  this.authProviders[providers[i]].<span class="apidocCodeKeywordSpan">logout</span>(dbName);
+}
+
+// Now logout all the servers
+var servers = this.connectedProxies.slice(0);
+var count = servers.length;
+if(count == 0) return callback();
+var errors = [];
+...</pre></li>
     </ul>
 
 
@@ -16388,21 +16943,21 @@ _server.<span class="apidocCodeKeywordSpan">remove</span>(&#x27;myproject.insert
   this.s.pool.unref();
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
+
+/**
+ * Unref this connection
+ * @method
+ * @return {boolean}
  */
-Pool.prototype.unref = function() {
-  // Get all the known connections
-  var connections = this.availableConnections
-    .concat(this.inUseConnections)
-    .concat(this.connectingConnections);
-  connections.forEach(function(c) {
-    c.<span class="apidocCodeKeywordSpan">unref</span>();
-  });
+Connection.prototype.unref = function() {
+  if (this.connection) this.connection.<span class="apidocCodeKeywordSpan">unref</span>();
+  else {
+    var self = this;
+    this.once(&#x27;connect&#x27;, function() {
+      self.connection.unref();
+    });
+  }
 }
-
-// Events
-var events = [&#x27;error&#x27;, &#x27;close&#x27;, &#x27;timeout&#x27;, &#x27;parseError&#x27;, &#x27;connect&#x27;];
-
-// Destroy the connections
 ...</pre></li>
     </ul>
 
@@ -16555,22 +17110,22 @@ _server.<span class="apidocCodeKeywordSpan">update</span>(&#x27;myproject.insert
   }
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
-});
-  }
-}
-
-server.on(&#x27;connect&#x27;, function(_server) {
-  console.log(&#x22;---------------------------------- 0&#x22;)
-  // Attempt authentication
-  _server.<span class="apidocCodeKeywordSpan">auth</span>(&#x27;scram-sha-1&#x27;, &#x27;admin&#x27;, &#x27;root&#x27;, &#x27;root
+setInterval(function() {
+  _server.insert(&#x27;test.test&#x27;, [{a:1}], function(err, r) {
+    console.log(&#x22;insert&#x22;)
+  });
+}, 1000)
+// console.log(&#x22;---------------------------------- 0&#x22;)
+// // Attempt authentication
+// _server.<span class="apidocCodeKeywordSpan">auth</span>(&#x27;scram-sha-1&#x27;, &#x27;admin&#x27;, &#x27;root&#x27;, &#x27;root
 &#x27;, function(err, r) {
-console.log(&#x22;---------------------------------- 1&#x22;)
-// console.dir(err)
-// console.dir(r)
-
-_server.insert(&#x27;test.test&#x27;, [{a:1}], function(err, r) {
-  console.log(&#x22;---------------------------------- 2&#x22;)
-  console.dir(err)
+//   console.log(&#x22;---------------------------------- 1&#x22;)
+//   // console.dir(err)
+//   // console.dir(r)
+//
+//   _server.insert(&#x27;test.test&#x27;, [{a:1}], function(err, r) {
+//     console.log(&#x22;---------------------------------- 2&#x22;)
+//     console.dir(err)
 ...</pre></li>
     </ul>
 
@@ -16588,7 +17143,23 @@ _server.insert(&#x27;test.test&#x27;, [{a:1}], function(err, r) {
     return x.db != dbName;
   });
 }</pre></li>
-    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+
+// Ensure no new members are processed while logging out
+this.authenticating = true;
+
+// Remove from all auth providers (avoid any reaplication of the auth details)
+var providers = Object.keys(this.authProviders);
+for(var i = 0; i &#x3c; providers.length; i++) {
+  this.authProviders[providers[i]].<span class="apidocCodeKeywordSpan">logout</span>(dbName);
+}
+
+// Now logout all the servers
+var servers = this.connectedProxies.slice(0);
+var count = servers.length;
+if(count == 0) return callback();
+var errors = [];
+...</pre></li>
     </ul>
 
 
@@ -16700,21 +17271,21 @@ module.exports = CommandResult;
   return JSON.stringify(this.toJSON());
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
-if(workItem.socketTimeout) {
-  connection.resetSocketTimeout();
-}
 
-// Log if debug enabled
-if(self.logger.isDebug()) {
-  self.logger.debug(f(&#x27;message [%s] received from %s:%s&#x27;
-    , message.raw.<span class="apidocCodeKeywordSpan">toString</span>(&#x27;hex&#x27;), self.options.host, self.options.port));
-}
+  // Execute MongoCR
+  var executeScram = function(connection) {
+// Clean up the user
+username = username.replace(&#x27;=&#x27;, &#x22;=3D&#x22;).replace(&#x27;,&#x27;, &#x27;=2C&#x27;);
 
-// Authenticate any straggler connections
-function authenticateStragglers(self, connection, callback) {
-  // Get any non authenticated connections
-  var connections = self.nonAuthenticatedConnections.slice(0);
-  var nonAuthenticatedConnections = self.nonAuthenticatedConnections;
+// Create a random nonce
+var nonce = crypto.randomBytes(24).<span class="apidocCodeKeywordSpan">toString</span>(&#x27;base64&#x27;);
+// var nonce = &#x27;MsQUY9iw0T9fx2MUEz6LZPwGuhVvWAhc&#x27;
+var firstBare = f(&#x22;n=%s,r=%s&#x22;, username, nonce);
+
+// Build command structure
+var cmd = {
+    saslStart: 1
+  , mechanism: &#x27;SCRAM-SHA-1&#x27;
 ...</pre></li>
     </ul>
 
@@ -17246,22 +17817,22 @@ Pool.prototype.get = function() {
   });
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
-});
-  }
-}
-
-server.on(&#x27;connect&#x27;, function(_server) {
-  console.log(&#x22;---------------------------------- 0&#x22;)
-  // Attempt authentication
-  _server.<span class="apidocCodeKeywordSpan">auth</span>(&#x27;scram-sha-1&#x27;, &#x27;admin&#x27;, &#x27;root&#x27;, &#x27;root
+setInterval(function() {
+  _server.insert(&#x27;test.test&#x27;, [{a:1}], function(err, r) {
+    console.log(&#x22;insert&#x22;)
+  });
+}, 1000)
+// console.log(&#x22;---------------------------------- 0&#x22;)
+// // Attempt authentication
+// _server.<span class="apidocCodeKeywordSpan">auth</span>(&#x27;scram-sha-1&#x27;, &#x27;admin&#x27;, &#x27;root&#x27;, &#x27;root
 &#x27;, function(err, r) {
-console.log(&#x22;---------------------------------- 1&#x22;)
-// console.dir(err)
-// console.dir(r)
-
-_server.insert(&#x27;test.test&#x27;, [{a:1}], function(err, r) {
-  console.log(&#x22;---------------------------------- 2&#x22;)
-  console.dir(err)
+//   console.log(&#x22;---------------------------------- 1&#x22;)
+//   // console.dir(err)
+//   // console.dir(r)
+//
+//   _server.insert(&#x27;test.test&#x27;, [{a:1}], function(err, r) {
+//     console.log(&#x22;---------------------------------- 2&#x22;)
+//     console.dir(err)
 ...</pre></li>
     </ul>
 
@@ -17357,23 +17928,14 @@ _server.insert(&#x27;test.test&#x27;, [{a:1}], function(err, r) {
   }
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
+  //       // _server.destroy();
+  //       // test.done();
+  //     });
+  //   });
+  // });
 });
 
-server.on(&#x27;reconnect&#x27;, function() {
-console.log(&#x27;reconnect&#x27;);
-});
-
-// Start connection
 server.<span class="apidocCodeKeywordSpan">connect</span>();
-```
-
-To connect to a replicaset we would use the `ReplSet` class and for a set of Mongos proxies we use the `Mongos` class. Each topology
- class offer the same CRUD operations and you operate on the topology directly. Let&#x27;s look at an example exercising all the
- different available CRUD operations.
-
-```js
-var Server = require(&#x27;mongodb-core&#x27;).Server
-, assert = require(&#x27;assert&#x27;);
 ...</pre></li>
     </ul>
 
@@ -17449,21 +18011,21 @@ var Server = require(&#x27;mongodb-core&#x27;).Server
   checkStatus();
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
-          assert.equal(null, err);
-          assert.equal(2, doc.a);
-
-          // Execute the ismaster command
-          _server.command(&#x22;system.$cmd&#x22;
-            , {ismaster: true}, function(err, result) {
-              assert.equal(null, err)
-              _server.<span class="apidocCodeKeywordSpan">destroy</span>();
-          });
-        });
-    });
-  });
-
-  test.done();
-});
+//         console.log(&#x22;=========== joined :: &#x22; + _t + &#x22; :: &#x22; + _server.name)
+//         executeCursors(_server, function() {
+//         });
+//       }
+//     })
+//
+//     // var s = _server.s.replicaSetState.secondaries[0];
+//     // s.<span class="apidocCodeKeywordSpan">destroy</span>({emitClose:true});
+//     executeCursors(_server, function() {
+//       console.log(&#x22;============== 0&#x22;)
+//       // Attempt to force a server reconnect
+//       var s = _server.s.replicaSetState.secondaries[0];
+//       name = s.name;
+//       s.destroy({emitClose:true});
+//       // console.log(&#x22;============== 1&#x22;)
 ...</pre></li>
     </ul>
 
@@ -17479,7 +18041,23 @@ var Server = require(&#x27;mongodb-core&#x27;).Server
     <li>description and source-code<pre class="apidocCodePre">get = function () {
   return this.allConnections()[0];
 }</pre></li>
-    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+  return;
+}
+
+// Adjust the count
+count = count - 1;
+
+// Do we already have server connection available for this host
+var _server = _self.s.replicaSetState.<span class="apidocCodeKeywordSpan">get</span>(_host);
+
+// Check if we have a known server connection and reuse
+if(_server) {
+  return pingServer(_self, _server, function(err) {
+    if(self.state == DESTROYED || self.state == UNREFERENCED) {
+      clearInterval(intervalId);
+      return;
+...</pre></li>
     </ul>
 
 
@@ -17515,21 +18093,21 @@ var Server = require(&#x27;mongodb-core&#x27;).Server
   return false;
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
+// We have a dead and killed cursor, attempting to call next should error
+if(isCursorDeadAndKilled(self, callback)) return;
 
-function attemptReconnect(self) {
-  return function() {
-self.emit(&#x27;attemptReconnect&#x27;, self);
-if(self.state == DESTROYED || self.state == DESTROYING) return;
-
-// We are connected do not try again
-if(self.<span class="apidocCodeKeywordSpan">isConnected</span>()) {
-  self.reconnectId = null;
-  return;
-}
-
-// If we have failure schedule a retry
-function _connectionFailureHandler(self) {
-  return function() {
+// We have just started the cursor
+if(!self.cursorState.init) {
+  // Topology is not connected, save the call in the provided store to be
+  // Executed at some point when the handler deems it&#x27;s reconnected
+  if(!self.topology.<span class="apidocCodeKeywordSpan">isConnected</span>(self.options) &#x26;&#x26; self.disconnectHandler !=
+null) {
+    if (self.topology.isDestroyed()) {
+      // Topology was destroyed, so don&#x27;t try to wait for it to reconnect
+      return callback(new MongoError(&#x27;Topology was destroyed&#x27;));
+    }
+    return self.disconnectHandler.addObjectAndMethod(&#x27;cursor&#x27;, self, &#x27;next&#x27;, [callback], callback);
+  }
 ...</pre></li>
     </ul>
 
@@ -17545,7 +18123,23 @@ function _connectionFailureHandler(self) {
     <li>description and source-code<pre class="apidocCodePre">isDestroyed = function () {
   return this.state == DESTROYED || this.state == DESTROYING;
 }</pre></li>
-    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+}
+
+/**
+ * Validate if the pool is dead and return error
+ */
+var isConnectionDead = function(self, callback) {
+if(self.pool
+  &#x26;&#x26; self.pool.<span class="apidocCodeKeywordSpan">isDestroyed</span>()) {
+  self.cursorState.notified = true;
+  self.cursorState.killed = true;
+  self.cursorState.documents = [];
+  self.cursorState.cursorIndex = 0;
+  callback(MongoError.create(f(&#x27;connection to host %s:%s was destroyed&#x27;, self.pool.host, self.pool.port)))
+  return true;
+}
+...</pre></li>
     </ul>
 
 
@@ -17560,7 +18154,24 @@ function _connectionFailureHandler(self) {
     <li>description and source-code<pre class="apidocCodePre">isDisconnected = function () {
   return this.state == DISCONNECTED;
 }</pre></li>
-    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+var self = this;
+options = options || {};
+
+// Set the connections
+if(serverAccounting) servers[this.id] = this;
+
+// Do not allow connect to be called on anything that&#x27;s not disconnected
+if(self.s.pool &#x26;&#x26; !self.s.pool.<span class="apidocCodeKeywordSpan">isDisconnected</span>() &#x26;&#x26; !self.s.pool.isDestroyed
+()) {
+  throw MongoError.create(f(&#x27;server instance in invalid state %s&#x27;, self.s.state));
+}
+
+// Create a pool
+self.s.pool = new Pool(assign(self.s.options, options, {bson: this.s.bson}));
+
+// Set up listeners
+...</pre></li>
     </ul>
 
 
@@ -17606,7 +18217,23 @@ function _connectionFailureHandler(self) {
     });
   }
 }</pre></li>
-    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+
+// Ensure no new members are processed while logging out
+this.authenticating = true;
+
+// Remove from all auth providers (avoid any reaplication of the auth details)
+var providers = Object.keys(this.authProviders);
+for(var i = 0; i &#x3c; providers.length; i++) {
+  this.authProviders[providers[i]].<span class="apidocCodeKeywordSpan">logout</span>(dbName);
+}
+
+// Now logout all the servers
+var servers = this.connectedProxies.slice(0);
+var count = servers.length;
+if(count == 0) return callback();
+var errors = [];
+...</pre></li>
     </ul>
 
 
@@ -17661,21 +18288,21 @@ event = event == &#x27;error&#x27; ? &#x27;close&#x27; : event;
   });
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
+
+/**
+ * Unref this connection
+ * @method
+ * @return {boolean}
  */
-Pool.prototype.unref = function() {
-  // Get all the known connections
-  var connections = this.availableConnections
-    .concat(this.inUseConnections)
-    .concat(this.connectingConnections);
-  connections.forEach(function(c) {
-    c.<span class="apidocCodeKeywordSpan">unref</span>();
-  });
+Connection.prototype.unref = function() {
+  if (this.connection) this.connection.<span class="apidocCodeKeywordSpan">unref</span>();
+  else {
+    var self = this;
+    this.once(&#x27;connect&#x27;, function() {
+      self.connection.unref();
+    });
+  }
 }
-
-// Events
-var events = [&#x27;error&#x27;, &#x27;close&#x27;, &#x27;timeout&#x27;, &#x27;parseError&#x27;, &#x27;connect&#x27;];
-
-// Destroy the connections
 ...</pre></li>
     </ul>
 
@@ -17793,21 +18420,20 @@ var events = [&#x27;error&#x27;, &#x27;close&#x27;, &#x27;timeout&#x27;, &#x27;p
   }
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
-header[index + 3] = (flags &#x3e;&#x3e; 24) &#x26; 0xff;
-header[index + 2] = (flags &#x3e;&#x3e; 16) &#x26; 0xff;
-header[index + 1] = (flags &#x3e;&#x3e; 8) &#x26; 0xff;
-header[index] = (flags) &#x26; 0xff;
-index = index + 4;
+}
 
-// Write collection name
-index = index + header.<span class="apidocCodeKeywordSpan">write</span>(this.ns, index, &#x27;utf8&#x27;) + 1;
-header[index - 1] = 0;
+// Add promote values if defined
+if(typeof self.cursorState.promoteBuffers == &#x27;boolean&#x27;) {
+  queryOptions.promoteBuffers = self.cursorState.promoteBuffers;
+}
+// Write the initial command out
+self.server.s.pool.<span class="apidocCodeKeywordSpan">write</span>(self.query, queryOptions, queryCallback);
+}
 
-// Write header information flags numberToSkip
-header[index + 3] = (this.numberToSkip &#x3e;&#x3e; 24) &#x26; 0xff;
-header[index + 2] = (this.numberToSkip &#x3e;&#x3e; 16) &#x26; 0xff;
-header[index + 1] = (this.numberToSkip &#x3e;&#x3e; 8) &#x26; 0xff;
-header[index] = (this.numberToSkip) &#x26; 0xff;
+Cursor.prototype._getmore = function(callback) {
+if(this.logger.isDebug()) this.logger.debug(f(&#x27;schedule getMore call for query [%s]&#x27;, JSON.stringify(this.query)))
+// Determine if it&#x27;s a raw query
+var raw = this.options.raw || this.cmd.raw;
 ...</pre></li>
     </ul>
 
@@ -17910,20 +18536,21 @@ header[index] = (this.numberToSkip) &#x26; 0xff;
   return servers;
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
+ * Unref all connections belong to this server
+ * @method
+ */
+ReplSet.prototype.unref = function() {
+  // Transition state
+  stateTransition(this, UNREFERENCED);
+
+  this.s.replicaSetState.<span class="apidocCodeKeywordSpan">allServers</span>().forEach(function(x) {
+    x.unref();
+  });
+
+  clearTimeout(this.haTimeoutId);
 }
 
-ReplSetState.prototype.hasSecondary = function() {
-return this.secondaries.length &#x3e; 0;
-}
-
-ReplSetState.prototype.get = function(host) {
-var servers = this.<span class="apidocCodeKeywordSpan">allServers</span>();
-
-for(var i = 0; i &#x3c; servers.length; i++) {
-  if(servers[i].name.toLowerCase() === host.toLowerCase()) {
-    return servers[i];
-  }
-}
+/**
 ...</pre></li>
     </ul>
 
@@ -17952,21 +18579,21 @@ for(var i = 0; i &#x3c; servers.length; i++) {
   this.set = {};
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
-          assert.equal(null, err);
-          assert.equal(2, doc.a);
-
-          // Execute the ismaster command
-          _server.command(&#x22;system.$cmd&#x22;
-            , {ismaster: true}, function(err, result) {
-              assert.equal(null, err)
-              _server.<span class="apidocCodeKeywordSpan">destroy</span>();
-          });
-        });
-    });
-  });
-
-  test.done();
-});
+//         console.log(&#x22;=========== joined :: &#x22; + _t + &#x22; :: &#x22; + _server.name)
+//         executeCursors(_server, function() {
+//         });
+//       }
+//     })
+//
+//     // var s = _server.s.replicaSetState.secondaries[0];
+//     // s.<span class="apidocCodeKeywordSpan">destroy</span>({emitClose:true});
+//     executeCursors(_server, function() {
+//       console.log(&#x22;============== 0&#x22;)
+//       // Attempt to force a server reconnect
+//       var s = _server.s.replicaSetState.secondaries[0];
+//       name = s.name;
+//       s.destroy({emitClose:true});
+//       // console.log(&#x22;============== 1&#x22;)
 ...</pre></li>
     </ul>
 
@@ -17990,7 +18617,23 @@ for(var i = 0; i &#x3c; servers.length; i++) {
 
   return null;
 }</pre></li>
-    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+  return;
+}
+
+// Adjust the count
+count = count - 1;
+
+// Do we already have server connection available for this host
+var _server = _self.s.replicaSetState.<span class="apidocCodeKeywordSpan">get</span>(_host);
+
+// Check if we have a known server connection and reuse
+if(_server) {
+  return pingServer(_self, _server, function(err) {
+    if(self.state == DESTROYED || self.state == UNREFERENCED) {
+      clearInterval(intervalId);
+      return;
+...</pre></li>
     </ul>
 
 
@@ -18006,21 +18649,22 @@ for(var i = 0; i &#x3c; servers.length; i++) {
   return this.primary != null;
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
-inherits(ReplSetState, EventEmitter);
+});
 
-ReplSetState.prototype.hasPrimaryAndSecondary = function() {
-  return this.primary != null &#x26;&#x26; this.secondaries.length &#x3e; 0;
+function rexecuteOperations(self) {
+  // If we have a primary and a disconnect handler, execute
+  // buffered operations
+  if(self.s.replicaSetState.hasPrimaryAndSecondary() &#x26;&#x26; self.s.disconnectHandler) {
+    self.s.disconnectHandler.execute();
+  } else if(self.s.replicaSetState.<span class="apidocCodeKeywordSpan">hasPrimary</span>() &#x26;&#x26; self.s.disconnectHandler
+) {
+    self.s.disconnectHandler.execute({ executePrimary:true });
+  } else if(self.s.replicaSetState.hasSecondary() &#x26;&#x26; self.s.disconnectHandler) {
+    self.s.disconnectHandler.execute({ executeSecondary:true });
+  }
 }
 
-ReplSetState.prototype.hasPrimaryOrSecondary = function() {
-  return this.<span class="apidocCodeKeywordSpan">hasPrimary</span>() || this.hasSecondary();
-}
-
-ReplSetState.prototype.hasPrimary = function() {
-  return this.primary != null;
-}
-
-ReplSetState.prototype.hasSecondary = function() {
+function connectNewServers(self, servers, callback) {
 ...</pre></li>
     </ul>
 
@@ -18037,21 +18681,22 @@ ReplSetState.prototype.hasSecondary = function() {
   return this.primary != null &#x26;&#x26; this.secondaries.length &#x3e; 0;
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
+    return BSON.native ? &#x22;c++&#x22; : &#x22;js&#x22;;
+  }
+});
+
+function rexecuteOperations(self) {
+  // If we have a primary and a disconnect handler, execute
+  // buffered operations
+  if(self.s.replicaSetState.<span class="apidocCodeKeywordSpan">hasPrimaryAndSecondary</span>() &#x26;&#x26; self.s.disconnectHandler
+) {
+    self.s.disconnectHandler.execute();
+  } else if(self.s.replicaSetState.hasPrimary() &#x26;&#x26; self.s.disconnectHandler) {
+    self.s.disconnectHandler.execute({ executePrimary:true });
+  } else if(self.s.replicaSetState.hasSecondary() &#x26;&#x26; self.s.disconnectHandler) {
+    self.s.disconnectHandler.execute({ executeSecondary:true });
+  }
 }
-
-function emitTopologyDescriptionChanged(self) {
-  if(self.listeners(&#x27;topologyDescriptionChanged&#x27;).length &#x3e; 0) {
-var topology = &#x27;Unknown&#x27;;
-var setName = self.setName;
-
-if(self.<span class="apidocCodeKeywordSpan">hasPrimaryAndSecondary</span>()) {
-  topology = &#x27;ReplicaSetWithPrimary&#x27;;
-} else if(!self.hasPrimary() &#x26;&#x26; self.hasSecondary()) {
-  topology = &#x27;ReplicaSetNoPrimary&#x27;;
-}
-
-// Generate description
-var description = {
 ...</pre></li>
     </ul>
 
@@ -18083,21 +18728,22 @@ var description = {
   return this.secondaries.length &#x3e; 0;
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
-inherits(ReplSetState, EventEmitter);
-
-ReplSetState.prototype.hasPrimaryAndSecondary = function() {
-  return this.primary != null &#x26;&#x26; this.secondaries.length &#x3e; 0;
+function rexecuteOperations(self) {
+// If we have a primary and a disconnect handler, execute
+// buffered operations
+if(self.s.replicaSetState.hasPrimaryAndSecondary() &#x26;&#x26; self.s.disconnectHandler) {
+  self.s.disconnectHandler.execute();
+} else if(self.s.replicaSetState.hasPrimary() &#x26;&#x26; self.s.disconnectHandler) {
+  self.s.disconnectHandler.execute({ executePrimary:true });
+} else if(self.s.replicaSetState.<span class="apidocCodeKeywordSpan">hasSecondary</span>() &#x26;&#x26; self.s.disconnectHandler
+) {
+  self.s.disconnectHandler.execute({ executeSecondary:true });
+}
 }
 
-ReplSetState.prototype.hasPrimaryOrSecondary = function() {
-  return this.hasPrimary() || this.<span class="apidocCodeKeywordSpan">hasSecondary</span>();
-}
-
-ReplSetState.prototype.hasPrimary = function() {
-  return this.primary != null;
-}
-
-ReplSetState.prototype.hasSecondary = function() {
+function connectNewServers(self, servers, callback) {
+// Count lefts
+var count = servers.length;
 ...</pre></li>
     </ul>
 
@@ -18210,7 +18856,23 @@ ReplSetState.prototype.hasSecondary = function() {
   // Return the primary
   return this.primary;
 }</pre></li>
-    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+* @param {ReadPreference} [options.readPreference] Specify read preference if command supports it
+* @return {Server}
+*/
+ReplSet.prototype.getServer = function(options) {
+ // Ensure we have no options
+ options = options || {};
+ // Pick the right server baspickServerd on readPreference
+ var server = this.s.replicaSetState.<span class="apidocCodeKeywordSpan">pickServer</span>(options.readPreference);
+ if(this.s.debug) this.emit(&#x27;pickedServer&#x27;, options.readPreference, server);
+ return server;
+}
+
+/**
+* Get a direct connection
+* @method
+...</pre></li>
     </ul>
 
 
@@ -18501,21 +19163,22 @@ _server.<span class="apidocCodeKeywordSpan">update</span>(&#x27;myproject.insert
   }
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
+      }
 
-/**
-* Recalculate all the stalness values for secodaries
-* @method
-*/
-ReplSetState.prototype.updateSecondariesMaxStaleness = function(haInterval) {
- for(var i = 0; i &#x3c; this.secondaries.length; i++) {
-   this.<span class="apidocCodeKeywordSpan">updateServerMaxStaleness</span>(this.secondaries[i], haInterval);
- }
+      // Server heart beat event
+      emitSDAMEvent(self, &#x27;serverHeartbeatSucceeded&#x27;, { durationMS: latencyMS, reply: r.result, connectionId: server.name
+ });
+    }
+
+    // Calculate the stalness for this server
+    self.s.replicaSetState.<span class="apidocCodeKeywordSpan">updateServerMaxStaleness</span>(server, self.s.haInterval);
+
+    // Callback
+    cb(err, r);
+  });
 }
 
-/**
-* Pick a server by the passed in ReadPreference
-* @method
-* @param {ReadPreference} readPreference The ReadPreference instance to use
+function topologyMonitor(self, options) {
 ...</pre></li>
     </ul>
 
@@ -18638,7 +19301,25 @@ ReplSetState.prototype.updateSecondariesMaxStaleness = function(haInterval) {
     self.s.serverDescription = description;
   }
 }</pre></li>
-    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+self.wireProtocolHandler = configureWireProtocolHandler(self, self.ismaster);
+// Have we defined self monitoring
+if(self.s.monitoring) {
+  self.monitoringProcessId = setTimeout(monitoringProcess(self), self.s.monitoringInterval);
+}
+
+// Emit server description changed if something listening
+sdam.<span class="apidocCodeKeywordSpan">emitServerDescriptionChanged</span>(self, {
+  address: self.name, arbiters: [], hosts: [], passives: [], type: !self.s.inTopology ? &#x27;Standalone&#x27; : sdam.getTopologyType
+(self)
+});
+
+// Emit topology description changed if something listening
+sdam.emitTopologyDescriptionChanged(self, {
+  topologyType: &#x27;Single&#x27;, servers: [{address: self.name, arbiters: [], hosts: [], passives: [], type: &#x27;Standalone
+&#x27;}]
+});
+...</pre></li>
     </ul>
 
 
@@ -18662,7 +19343,25 @@ ReplSetState.prototype.updateSecondariesMaxStaleness = function(haInterval) {
     self.s.serverDescription = description;
   }
 }</pre></li>
-    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+
+// Emit server description changed if something listening
+sdam.emitServerDescriptionChanged(self, {
+  address: self.name, arbiters: [], hosts: [], passives: [], type: !self.s.inTopology ? &#x27;Standalone&#x27; : sdam.getTopologyType
+(self)
+});
+
+// Emit topology description changed if something listening
+sdam.<span class="apidocCodeKeywordSpan">emitTopologyDescriptionChanged</span>(self, {
+  topologyType: &#x27;Single&#x27;, servers: [{address: self.name, arbiters: [], hosts: [], passives: [], type: &#x27;Standalone
+&#x27;}]
+});
+
+// Log the ismaster if available
+if(self.s.logger.isInfo()) {
+  self.s.logger.info(f(&#x27;server %s connected with ismaster [%s]&#x27;, self.name, JSON.stringify(self.ismaster)));
+}
+...</pre></li>
     </ul>
 
 
@@ -18687,7 +19386,24 @@ ReplSetState.prototype.updateSecondariesMaxStaleness = function(haInterval) {
   if(ismaster.arbiterOnly) return &#x27;RSArbiter&#x27;;
   return &#x27;Unknown&#x27;;
 }</pre></li>
-    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+// Have we defined self monitoring
+if(self.s.monitoring) {
+  self.monitoringProcessId = setTimeout(monitoringProcess(self), self.s.monitoringInterval);
+}
+
+// Emit server description changed if something listening
+sdam.emitServerDescriptionChanged(self, {
+  address: self.name, arbiters: [], hosts: [], passives: [], type: !self.s.inTopology ? &#x27;Standalone&#x27; : sdam.<span class
+="apidocCodeKeywordSpan">getTopologyType</span>(self)
+});
+
+// Emit topology description changed if something listening
+sdam.emitTopologyDescriptionChanged(self, {
+  topologyType: &#x27;Single&#x27;, servers: [{address: self.name, arbiters: [], hosts: [], passives: [], type: &#x27;Standalone
+&#x27;}]
+});
+...</pre></li>
     </ul>
 
 
@@ -18913,22 +19629,22 @@ ReplSetState.prototype.updateSecondariesMaxStaleness = function(haInterval) {
   }
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
-});
-  }
-}
-
-server.on(&#x27;connect&#x27;, function(_server) {
-  console.log(&#x22;---------------------------------- 0&#x22;)
-  // Attempt authentication
-  _server.<span class="apidocCodeKeywordSpan">auth</span>(&#x27;scram-sha-1&#x27;, &#x27;admin&#x27;, &#x27;root&#x27;, &#x27;root
+setInterval(function() {
+  _server.insert(&#x27;test.test&#x27;, [{a:1}], function(err, r) {
+    console.log(&#x22;insert&#x22;)
+  });
+}, 1000)
+// console.log(&#x22;---------------------------------- 0&#x22;)
+// // Attempt authentication
+// _server.<span class="apidocCodeKeywordSpan">auth</span>(&#x27;scram-sha-1&#x27;, &#x27;admin&#x27;, &#x27;root&#x27;, &#x27;root
 &#x27;, function(err, r) {
-console.log(&#x22;---------------------------------- 1&#x22;)
-// console.dir(err)
-// console.dir(r)
-
-_server.insert(&#x27;test.test&#x27;, [{a:1}], function(err, r) {
-  console.log(&#x22;---------------------------------- 2&#x22;)
-  console.dir(err)
+//   console.log(&#x22;---------------------------------- 1&#x22;)
+//   // console.dir(err)
+//   // console.dir(r)
+//
+//   _server.insert(&#x27;test.test&#x27;, [{a:1}], function(err, r) {
+//     console.log(&#x22;---------------------------------- 2&#x22;)
+//     console.dir(err)
 ...</pre></li>
     </ul>
 
@@ -18946,7 +19662,23 @@ _server.insert(&#x27;test.test&#x27;, [{a:1}], function(err, r) {
     return x.db != dbName;
   });
 }</pre></li>
-    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+
+// Ensure no new members are processed while logging out
+this.authenticating = true;
+
+// Remove from all auth providers (avoid any reaplication of the auth details)
+var providers = Object.keys(this.authProviders);
+for(var i = 0; i &#x3c; providers.length; i++) {
+  this.authProviders[providers[i]].<span class="apidocCodeKeywordSpan">logout</span>(dbName);
+}
+
+// Now logout all the servers
+var servers = this.connectedProxies.slice(0);
+var count = servers.length;
+if(count == 0) return callback();
+var errors = [];
+...</pre></li>
     </ul>
 
 
@@ -19011,7 +19743,23 @@ function authenticateAgainstProvider(pool, connection, providers, cb) {
   for(var name in fObj) tObj[name] = fObj[name];
   return tObj;
 }</pre></li>
-    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+      // If we still have bytes to read on the current message
+      if(self.bytesRead &#x3e; 0 &#x26;&#x26; self.sizeOfMessage &#x3e; 0) {
+// Calculate the amount of remaining bytes
+var remainingBytesToRead = self.sizeOfMessage - self.bytesRead;
+// Check if the current chunk contains the rest of the message
+if(remainingBytesToRead &#x3e; data.length) {
+  // Copy the new data into the exiting buffer (should have been allocated when we know the message size)
+  data.<span class="apidocCodeKeywordSpan">copy</span>(self.buffer, self.bytesRead);
+  // Adjust the number of bytes read so it point to the correct index in the buffer
+  self.bytesRead = self.bytesRead + data.length;
+
+  // Reset state of buffer
+  data = new Buffer(0);
+} else {
+  // Copy the missing part of the data into our current buffer
+...</pre></li>
     </ul>
 
 
